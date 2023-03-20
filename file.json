@@ -1,0 +1,73 @@
+{
+  "Amenity.0d9d0107-2ba7-4c87-af41-d6088279d780": {
+    "id": "0d9d0107-2ba7-4c87-af41-d6088279d780",
+    "created_at": "2023-02-12T03:48:39.190466",
+    "updated_at": "2023-02-12T03:48:39.190468",
+    "__class__": "Amenity"
+  },
+  "Amenity.db0cc13c-7557-41a4-80bb-be692a7d1acf": {
+    "id": "db0cc13c-7557-41a4-80bb-be692a7d1acf",
+    "created_at": "2023-02-12T03:48:39.190483",
+    "updated_at": "2023-02-12T03:48:39.190484",
+    "__class__": "Amenity"
+  },
+  "Amenity.c0fca64e-17ce-426b-88eb-35da57b5cc0d": {
+    "id": "c0fca64e-17ce-426b-88eb-35da57b5cc0d",
+    "created_at": "2023-02-12T03:48:39.190561",
+    "updated_at": "2023-02-12T03:48:39.190563",
+    "__class__": "Amenity"
+  },
+  "Amenity.7ddf82d3-d6d6-480a-a85d-07afd6e6c268": {
+    "id": "7ddf82d3-d6d6-480a-a85d-07afd6e6c268",
+    "created_at": "2023-02-12T03:48:39.190573",
+    "updated_at": "2023-02-12T03:48:39.190574",
+    "__class__": "Amenity"
+  },
+  "BaseModel.054a755b-8aa4-4e47-b201-bd4a2d654921": {
+    "id": "054a755b-8aa4-4e47-b201-bd4a2d654921",
+    "created_at": "2023-02-12T03:48:39.190678",
+    "updated_at": "2023-02-12T03:48:39.190679",
+    "__class__": "BaseModel"
+  },
+  "BaseModel.f8c73f7f-4ba4-44e4-b809-ad6a2cc4dd98": {
+    "id": "f8c73f7f-4ba4-44e4-b809-ad6a2cc4dd98",
+    "created_at": "2023-02-12T03:48:39.190689",
+    "updated_at": "2023-02-12T03:48:39.190690",
+    "__class__": "BaseModel"
+  },
+  "BaseModel.422f701f-534d-456e-bab9-aba445ab2c7f": {
+    "id": "422f701f-534d-456e-bab9-aba445ab2c7f",
+    "created_at": "2023-02-12T03:48:39.190711",
+    "updated_at": "2023-02-12T03:48:39.190716",
+    "__class__": "BaseModel"
+  },
+  "User.08f9d2f6-863d-43e9-bfe7-f7f7fa513812": {
+    "id": "08f9d2f6-863d-43e9-bfe7-f7f7fa513812",
+    "created_at": "2023-02-12T05:28:51.152037",
+    "updated_at": "2023-02-12T05:28:51.152042",
+    "__class__": "User",
+    ".\"name\":": "\"nathan\""
+  },
+  "User.1ba25644-9eee-4eb7-91c6-ec231b64b003": {
+    "id": "1ba25644-9eee-4eb7-91c6-ec231b64b003",
+    "created_at": "2023-02-12T05:32:05.681708",
+    "updated_at": "2023-02-12T05:32:05.681713",
+    "__class__": "User"
+  },
+  "User.ac4f73c2-c35c-43fb-90b5-ca4112d9c5da": {
+    "id": "ac4f73c2-c35c-43fb-90b5-ca4112d9c5da",
+    "created_at": "2023-02-12T05:32:44.092106",
+    "updated_at": "2023-02-12T05:32:44.092110",
+    "__class__": "User",
+    "name": "Nathan",
+    "age": "34"
+  },
+  "User.fb4b55ef-364b-42d9-9ba8-4724d4d4d9c4": {
+    "id": "fb4b55ef-364b-42d9-9ba8-4724d4d4d9c4",
+    "created_at": "2023-02-12T05:38:57.842603",
+    "updated_at": "2023-02-12T05:38:57.842609",
+    "__class__": "User",
+    "first_name": "John",
+    "age": 89
+  }
+}
