@@ -72,6 +72,33 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         elif arg[0] not in HBNBCommand.__classNames:
             print("** class doesn't exist **")
+        elif len(arg) > 1:
+            new_dict = {}
+            for atr in arg[1:]:
+                """ This is to match the input <key name>=<value>"""
+                if match := re.search(r'(\w+)="?([\w\.]+|\S+)"?', atr):
+
+                    """ unpucking the key and value """
+                    key, value = match.groups()
+
+                    """ This is for a number like '0001' """
+                    if value[0] == "0" and '.' not in value:
+                        new_dict[key] = value
+
+                    elif value.replace("-", "").isnumeric():
+                        new_dict[key] = int(value)
+
+                    elif value.replace(".", "").replace("-", "").isnumeric():
+                        new_dict[key] = float(value)
+
+                    elif "_" in value:
+                        v = value.replace("_", " ")
+                        new_dict[key] = v
+
+                    else:
+                        new_dict[key] = value
+            print(eval(arg[0])(**new_dict).id)
+            storage.save()
         else:
             print(eval(arg[0])().id)
             storage.save()
