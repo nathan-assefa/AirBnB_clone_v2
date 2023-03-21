@@ -136,21 +136,29 @@ class HBNBCommand(cmd.Cmd):
             del from_fileClass[arg[0] + "." + arg[1]]
             storage.save()
 
-    def do_all(self, arg):
-        """Usage: all or all <class> or <class>.all()
-        Display string representations of all instances of a given class.
-        If no class is specified, displays all instantiated objects."""
-        argl = arg.split()
-        if len(argl) > 0 and argl[0] not in HBNBCommand.__classNames:
+    def do_all(self, line):
+        """Prints all string representation of all instances
+        Exceptions:
+            NameError: when there is no object taht has the name
+        """
+        objects = storage.all()
+        my_list = []
+        if not line:
+            for key in objects:
+                my_list.append(objects[key])
+            print(my_list)
+            return
+        try:
+            args = line.split(" ")
+            if args[0] not in self.__classNames:
+                raise NameError()
+            for key in objects:
+                name = key.split('.')
+                if name[0] == args[0]:
+                    my_list.append(objects[key])
+            print(my_list)
+        except NameError:
             print("** class doesn't exist **")
-        else:
-            objl = []
-            for obj in storage.all().values():
-                if len(argl) > 0 and argl[0] == obj.__class__.__name__:
-                    objl.append(obj.__str__())
-                elif len(argl) == 0:
-                    objl.append(obj.__str__())
-            print(objl)
 
     def do_count(self, line):
         """To count instances of the same class"""
@@ -216,7 +224,7 @@ class HBNBCommand(cmd.Cmd):
         """EOF to exit the program"""
         print()
         return True
-    def delete(self, obj=None):
+   # def delete(self, obj=None):
 
 
 
