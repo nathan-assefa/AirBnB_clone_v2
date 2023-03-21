@@ -22,7 +22,7 @@ class BaseModel:
                 else:
                     self.__dict__[key] = val
 
-        if 'id' not in kwargs:
+        if 'id' not in kwargs.keys():
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()

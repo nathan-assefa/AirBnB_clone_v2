@@ -1,90 +1,37 @@
 {
-  "Amenity.0d9d0107-2ba7-4c87-af41-d6088279d780": {
-    "id": "0d9d0107-2ba7-4c87-af41-d6088279d780",
-    "created_at": "2023-02-12T03:48:39.190466",
-    "updated_at": "2023-02-12T03:48:39.190468",
-    "__class__": "Amenity"
+  "State.9ab03040-58b0-4b74-9ec6-077cb9c6fe37": {
+    "id": "9ab03040-58b0-4b74-9ec6-077cb9c6fe37",
+    "created_at": "2023-03-20T23:34:13.971226",
+    "updated_at": "2023-03-20T23:34:13.971231",
+    "__class__": "State"
   },
-  "Amenity.db0cc13c-7557-41a4-80bb-be692a7d1acf": {
-    "id": "db0cc13c-7557-41a4-80bb-be692a7d1acf",
-    "created_at": "2023-02-12T03:48:39.190483",
-    "updated_at": "2023-02-12T03:48:39.190484",
-    "__class__": "Amenity"
+  "State.736cbade-edb1-4b22-bbc3-416aa2444a9f": {
+    "id": "736cbade-edb1-4b22-bbc3-416aa2444a9f",
+    "created_at": "2023-03-20T23:34:13.971579",
+    "updated_at": "2023-03-20T23:34:13.971581",
+    "__class__": "State"
   },
-  "Amenity.c0fca64e-17ce-426b-88eb-35da57b5cc0d": {
-    "id": "c0fca64e-17ce-426b-88eb-35da57b5cc0d",
-    "created_at": "2023-02-12T03:48:39.190561",
-    "updated_at": "2023-02-12T03:48:39.190563",
-    "__class__": "Amenity"
+  "Place.4b0443e0-7520-4ed3-a8e4-baf3782f134e": {
+    "id": "4b0443e0-7520-4ed3-a8e4-baf3782f134e",
+    "created_at": "2023-03-20T23:34:13.972440",
+    "updated_at": "2023-03-20T23:34:13.972443",
+    "__class__": "Place"
   },
-  "Amenity.7ddf82d3-d6d6-480a-a85d-07afd6e6c268": {
-    "id": "7ddf82d3-d6d6-480a-a85d-07afd6e6c268",
-    "created_at": "2023-02-12T03:48:39.190573",
-    "updated_at": "2023-02-12T03:48:39.190574",
-    "__class__": "Amenity"
-  },
-  "BaseModel.054a755b-8aa4-4e47-b201-bd4a2d654921": {
-    "id": "054a755b-8aa4-4e47-b201-bd4a2d654921",
-    "created_at": "2023-02-12T03:48:39.190678",
-    "updated_at": "2023-02-12T03:48:39.190679",
-    "__class__": "BaseModel"
-  },
-  "BaseModel.f8c73f7f-4ba4-44e4-b809-ad6a2cc4dd98": {
-    "id": "f8c73f7f-4ba4-44e4-b809-ad6a2cc4dd98",
-    "created_at": "2023-02-12T03:48:39.190689",
-    "updated_at": "2023-02-12T03:48:39.190690",
-    "__class__": "BaseModel"
-  },
-  "BaseModel.422f701f-534d-456e-bab9-aba445ab2c7f": {
-    "id": "422f701f-534d-456e-bab9-aba445ab2c7f",
-    "created_at": "2023-02-12T03:48:39.190711",
-    "updated_at": "2023-02-12T03:48:39.190716",
-    "__class__": "BaseModel"
-  },
-  "User.08f9d2f6-863d-43e9-bfe7-f7f7fa513812": {
-    "id": "08f9d2f6-863d-43e9-bfe7-f7f7fa513812",
-    "created_at": "2023-02-12T05:28:51.152037",
-    "updated_at": "2023-02-12T05:28:51.152042",
-    "__class__": "User",
-    ".\"name\":": "\"nathan\""
-  },
-  "User.1ba25644-9eee-4eb7-91c6-ec231b64b003": {
-    "id": "1ba25644-9eee-4eb7-91c6-ec231b64b003",
-    "created_at": "2023-02-12T05:32:05.681708",
-    "updated_at": "2023-02-12T05:32:05.681713",
-    "__class__": "User"
-  },
-  "User.ac4f73c2-c35c-43fb-90b5-ca4112d9c5da": {
-    "id": "ac4f73c2-c35c-43fb-90b5-ca4112d9c5da",
-    "created_at": "2023-02-12T05:32:44.092106",
-    "updated_at": "2023-02-12T05:32:44.092110",
-    "__class__": "User",
-    "name": "Nathan",
-    "age": "34"
-  },
-  "User.fb4b55ef-364b-42d9-9ba8-4724d4d4d9c4": {
-    "id": "fb4b55ef-364b-42d9-9ba8-4724d4d4d9c4",
-    "created_at": "2023-02-12T05:38:57.842603",
-    "updated_at": "2023-02-12T05:38:57.842609",
-    "__class__": "User",
-    "first_name": "John",
-    "age": 89
-  },
-  "State.ff18f802-31a1-4a73-a57e-0094397e176b": {
+  "State.9a719a29-82d9-4ff9-8335-06bf4d71c8c3": {
     "name": "California",
-    "id": "ff18f802-31a1-4a73-a57e-0094397e176b",
-    "created_at": "2023-03-20T13:29:50.476688",
-    "updated_at": "2023-03-20T13:29:50.476691",
+    "id": "9a719a29-82d9-4ff9-8335-06bf4d71c8c3",
+    "created_at": "2023-03-20T23:37:57.370889",
+    "updated_at": "2023-03-20T23:37:57.370892",
     "__class__": "State"
   },
-  "State.11d078dc-fb1c-4771-9c54-9ff9040ae4bd": {
+  "State.e63b03c4-457f-4be7-b4b1-1e5371cce3ca": {
     "name": "Arizona",
-    "id": "11d078dc-fb1c-4771-9c54-9ff9040ae4bd",
-    "created_at": "2023-03-20T13:29:50.477258",
-    "updated_at": "2023-03-20T13:29:50.477261",
+    "id": "e63b03c4-457f-4be7-b4b1-1e5371cce3ca",
+    "created_at": "2023-03-20T23:37:57.371315",
+    "updated_at": "2023-03-20T23:37:57.371317",
     "__class__": "State"
   },
-  "Place.c26cd731-8f44-4a6b-8fda-460c90340d84": {
+  "Place.275c949c-2aec-4efc-a830-1d9b521f9548": {
     "city_id": "0001",
     "user_id": "0001",
     "name": "My little house",
@@ -94,9 +41,9 @@
     "price_by_night": 300,
     "latitude": 37.773972,
     "longitude": -122.431297,
-    "id": "c26cd731-8f44-4a6b-8fda-460c90340d84",
-    "created_at": "2023-03-20T13:29:50.478952",
-    "updated_at": "2023-03-20T13:29:50.478956",
+    "id": "275c949c-2aec-4efc-a830-1d9b521f9548",
+    "created_at": "2023-03-20T23:37:57.372866",
+    "updated_at": "2023-03-20T23:37:57.372869",
     "__class__": "Place"
   }
 }
