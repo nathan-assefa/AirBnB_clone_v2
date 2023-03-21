@@ -66,45 +66,43 @@ class HBNBCommand(cmd.Cmd):
         return cmd.Cmd.precmd(self, line)
 
     def do_create(self, line):
-        """Creates a new instance of BaseModel, saves it
-        Exceptions:
-            SyntaxError: when there is no args given
-            NameError: when there is no object taht has the name
-        """
-        try:
-            if not line:
-                raise SyntaxError()
-            my_list = line.split(" ")
-            obj = eval("{}()".format(my_list[0]))
-            for pair in my_list[1:]:
-                pair = pair.split('=', 1)
-                if len(pair) == 1 or "" in pair:
-                    continue
-                match = re.search('^"(.*)"$', pair[1])
-                cast = str
-                if match:
-                    value = match.group(1)
-                    value = value.replace('_', ' ')
-                    value = re.sub(r'(?<!\\)"', r'\\"', value)
-                else:
-                    value = pair[1]
-                    if "." in value:
-                        cast = float
-                    else:
-                        cast = int
-                try:
-                    value = cast(value)
-                except ValueError:
-                    pass
-                # TODO: escape double quotes for string
-                # TODO: replace '_' with spaces ' ' for string
-                setattr(obj, pair[0], value)
-            obj.save()
-            print("{}".format(obj.id))
-        except SyntaxError:
+        """To create instances"""
+        arg = line.split()
+        if len(arg) == 0:
             print("** class name missing **")
-        except NameError:
+        elif arg[0] not in HBNBCommand.__classNames:
             print("** class doesn't exist **")
+        elif len(arg) > 1:
+            new_dict = {}
+            for atr in arg[1:]:
+                """ This is to match the input <key name>=<value>"""
+                if match := re.search(r'(\w+)="?([\w\.]+|\S+)"?', atr):
+
+                    """ unpucking the key and value """
+                    key, value = match.groups()
+
+                    """ This is for a number like '0001' """
+                    if value[0] == "0" and '.' not in value:
+                        new_dict[key] = value
+
+                    elif value.replace("-", "").isnumeric():
+                        new_dict[key] = int(value)
+
+                    elif value.replace(".", "").replace("-", "").isnumeric():
+                        new_dict[key] = float(value)
+
+                    elif "_" in value:
+                        v = value.replace("_", " ")
+                        new_dict[key] = v
+
+                    else:
+                        new_dict[key] = value
+            new_ins = eval(arg[0])(**new_dict)
+            print(new_ins.id)
+            new_ins.save()
+        else:
+            new_ins = eval(arg[0])().id
+            print(new_ins.id)
 
     def do_show(self, line):
         """To show insatances"""
