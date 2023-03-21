@@ -2,17 +2,26 @@
 import models
 from uuid import uuid4
 from datetime import datetime
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, String, DateTime
+
 """This is class is the parent class of the rest
 of the classes in this project, namely, User, State,
 Amenity, Place, and Review. This class comprises the
 comman methods and attributes that is used in other
 classes.
 """
+Base = declarative_base()
 
 
 class BaseModel:
     """Defining the init method to initialize the
     the attributes"""
+
+    id = Column(String(60), primary_key=True, nullable=False)
+    created_at = Column(DateTime, default=(datetime.utcnow()))
+    updated_at = Column(DateTime, default=(datetime.utcnow()))
+
     def __init__(self, *args, **kwargs):
         if kwargs:
             directives = "%Y-%m-%dT%H:%M:%S.%f"
@@ -45,4 +54,9 @@ class BaseModel:
         _dict["__class__"] = self.__class__.__name__
         _dict["created_at"] = self.created_at.isoformat()
         _dict["updated_at"] = self.updated_at.isoformat()
+        if _dict['_sa_instance_state']:
+            del _dict['_sa_instance_state']
         return _dict
+
+    def delete(self):
+        models.storage.delete(self)

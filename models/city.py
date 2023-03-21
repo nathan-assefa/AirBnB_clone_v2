@@ -1,15 +1,17 @@
 #!/usr/bin/python3
 """Defines the City class."""
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
+from sqlalchemy import Column, Integer, String
+from sqlalchemy import ForeignKey
 
-
-class City(BaseModel):
+class City(BaseModel, Base):
     """Represent a city.
 
     Attributes:
         state_id (str): The state id.
         name (str): The name of the city.
     """
+    __tablename__ = 'cities'
 
-    state_id = ""
-    name = ""
+    name = Column(String(128), nullable=False)
+    state_id = Column(String(60), ForeignKey('states.id'))
