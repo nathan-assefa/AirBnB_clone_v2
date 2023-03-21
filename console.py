@@ -97,11 +97,12 @@ class HBNBCommand(cmd.Cmd):
 
                     else:
                         new_dict[key] = value
-            print(eval(arg[0])(**new_dict).id)
-            storage.save()
+            new_ins = eval(arg[0])(**new_dict)
+            print(new_ins.id)
+            new_ins.save()
         else:
-            print(eval(arg[0])().id)
-            storage.save()
+            new_ins = eval(arg[0])().id
+            print(new_ins.id)
 
     def do_show(self, line):
         """To show insatances"""
@@ -135,7 +136,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             del from_fileClass[arg[0] + "." + arg[1]]
             storage.save()
-
+    
     def do_all(self, line):
         """Prints all string representation of all instances
         Exceptions:
@@ -224,8 +225,6 @@ class HBNBCommand(cmd.Cmd):
         """EOF to exit the program"""
         print()
         return True
-   # def delete(self, obj=None):
-
 
 
 if __name__ == "__main__":

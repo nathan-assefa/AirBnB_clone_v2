@@ -18,11 +18,11 @@ class State(BaseModel, Base):
 
     name = Column(String(128), nullable=False)
     state_id = Column(String(60), ForeignKey('states.id'))
-    if environ['HBNB_TYPE_STORAGE'] == 'db':
-        cities = relationship(
-                'City', cascade='all, delete', backref='state'
-                )
-    else:
+    #if environ['HBNB_TYPE_STORAGE'] == 'db':
+        #cities = relationship(
+                #'City', cascade='all, delete', backref='state'
+                #)
+    if True:
         @property
         def cities(self):
             """Getter method for cities
