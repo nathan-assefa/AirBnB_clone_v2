@@ -1,1 +1,1 @@
-this is webstatic app for airbnb clone
+This directory implements webpage design.
