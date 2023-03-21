@@ -1,44 +1,48 @@
 #!/usr/bin/python3
-"""This module defines a base class for all models in our hbnb clone"""
-import uuid
+import models
+from uuid import uuid4
 from datetime import datetime
+"""This is class is the parent class of the rest
+of the classes in this project, namely, User, State,
+Amenity, Place, and Review. This class comprises the
+comman methods and attributes that is used in other
+classes.
+"""
 
 
 class BaseModel:
-    """A base class for all hbnb models"""
+    """Defining the init method to initialize the
+    the attributes"""
     def __init__(self, *args, **kwargs):
-        """Instatntiates a new model"""
-        if not kwargs:
-            from models import storage
-            self.id = str(uuid.uuid4())
+        if kwargs:
+            directives = "%Y-%m-%dT%H:%M:%S.%f"
+            for key, val in kwargs.items():
+                if key == "created_at" or key == "updated_at":
+                    self.__dict__[key] = datetime.strptime(val, directives)
+                else:
+                    self.__dict__[key] = val
+
+        if 'id' not in kwargs:
+            self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-            storage.new(self)
-        else:
-            kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
-                                                     '%Y-%m-%dT%H:%M:%S.%f')
-            kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
-                                                     '%Y-%m-%dT%H:%M:%S.%f')
-            del kwargs['__class__']
-            self.__dict__.update(kwargs)
+            models.storage.new(self)
 
     def __str__(self):
-        """Returns a string representation of the instance"""
-        cls = (str(type(self)).split('.')[-1]).split('\'')[0]
-        return '[{}] ({}) {}'.format(cls, self.id, self.__dict__)
+        """To return the standard string to print function"""
+        return "[{}] ({}) {}".format(
+                self.__class__.__name__, self.id, self.__dict__
+                )
 
     def save(self):
-        """Updates updated_at with current time when instance is changed"""
-        from models import storage
+        """Save either crated or updated instances"""
         self.updated_at = datetime.now()
-        storage.save()
+        models.storage.save()
 
     def to_dict(self):
-        """Convert instance into dict format"""
-        dictionary = {}
-        dictionary.update(self.__dict__)
-        dictionary.update({'__class__':
-                          (str(type(self)).split('.')[-1]).split('\'')[0]})
-        dictionary['created_at'] = self.created_at.isoformat()
-        dictionary['updated_at'] = self.updated_at.isoformat()
-        return dictionary
+        """Puting the data in the dict object"""
+        _dict = self.__dict__.copy()
+        _dict["__class__"] = self.__class__.__name__
+        _dict["created_at"] = self.created_at.isoformat()
+        _dict["updated_at"] = self.updated_at.isoformat()
+        return _dict
