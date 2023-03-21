@@ -97,6 +97,9 @@ class HBNBCommand(cmd.Cmd):
 
                     else:
                         new_dict[key] = value.replace('"', '')
+                else:
+                    print("** class doesn't exist **")
+                    return
             new_ins = eval(arg[0])(**new_dict)
             print(new_ins.id)
             new_ins.save()
