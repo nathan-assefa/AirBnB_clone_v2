@@ -21,10 +21,19 @@ class FileStorage:
     __file_path = "file.json"
     __objects = {}
 
-    def all(self):
+    def all(self, cls=None):
         """Return the dictionary representation of the
         instances"""
-        return FileStorage.__objects
+        if not cls:
+            return self.__objects
+        return {k: v for k, v in self.__objects.items() if type(v) == cls}
+
+    def delete(self, obj=None):
+        """ To delete a specific instance """
+        if obj:
+            className = obj.__class__.__name__ + '.' + obj.id
+            if className in self.__objects.keys():
+                del self.__objects[className]
 
     def new(self, obj):
         """To set in instances in the __objects dictionary"""
