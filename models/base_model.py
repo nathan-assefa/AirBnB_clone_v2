@@ -36,7 +36,7 @@ class BaseModel:
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
 
-
+    
     def __str__(self):
         """To return the standard string to print function"""
         return "[{}] ({}) {}".format(

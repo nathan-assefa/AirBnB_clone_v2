@@ -10,27 +10,18 @@ from models.review import Review
 from os import getenv
 from sqlalchemy import create_engine, MetaData
 
-__classNames = [
-            "BaseModel",
-            "User",
-            "State",
-            "City",
-            "Place",
-            "Amenity",
-            "Review"]
 
 class DBStorage():
     """ This class comprises the ORM methods that helps us
     to interact with our detabase """
 
     __classNames = [
-            "BaseModel",
-            "User",
-            "State",
-            "City",
-            "Place",
-            "Amenity",
-            "Review"]
+            User,
+            State,
+            City,
+            Place,
+            Amenity,
+            Review]
 
     __engine = None
     __session = None
@@ -47,46 +38,33 @@ class DBStorage():
                     getenv("HBNB_MYSQL_HOST"),
                     getenv("HBNB_MYSQL_DB")),
             pool_pre_ping=True)
-    """
+
     def all(self, cls=None):
         #query to fetch all objects related to cls if cls
         #is not None. Otherwise fetch all
-
+        """
         list_obj = []
         if not cls:
-           # [list_obj.append(obj) for obj 
-           #in session.query(__classNames)]
            for obj in DBStorage.__classNames:
-               list_obj += self.__session.query(obj)
+               list_obj += (self.__session.query(obj))
+               print(list_obj)
         else:
             list_obj = self.__session.query(cls)
 
         #return the dictionary reperesentation
         #return {v.__class__.__name__ + '.' + v.id: v for v in list_obj
         return {type(v).__name__ + '.' + v.id: v for v in list_obj}
-    """
-    def all(self, cls=None):
-        """returns a dictionary
-        Return:
-            returns a dictionary of __object
         """
-        dic = {}
-        if cls:
-            if type(cls) is str:
-                cls = eval(cls)
-            query = self.__session.query(cls)
-            for elem in query:
-                key = "{}.{}".format(type(elem).__name__, elem.id)
-                dic[key] = elem
-        else:
-            lista = [State, City, User, Place, Review, Amenity]
-            for clase in lista:
-                query = self.__session.query(clase)
-                for elem in query:
-                    key = "{}.{}".format(type(elem).__name__, elem.id)
-                    dic[key] = elem
-        return (dic)
+        obj_dict = {}
 
+        if cls:
+            obj_dict.update(session.query(cls))
+        else:
+            for key in DBStorage.__classNames:
+                for row in self.__session.query(key):
+                    obj_dict.update({'{}.{}'.
+                                    format(type(row).__name__, row.id,): row})
+        return obj_dict
 
     def new(self, obj):
         """ Adding the obj to the database """
