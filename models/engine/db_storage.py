@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """The driving power of relational databses"""
 from models.base_model import BaseModel, Base
-#from models.user import User
+from models.user import User
 from models.state import State
 from models.city import City
 """
@@ -18,7 +18,7 @@ class DBStorage():
     to interact with our detabase """
 
     __classNames = [
-            #User,
+            User,
             State,
             City,
             #Place,
