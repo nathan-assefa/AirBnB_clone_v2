@@ -4,6 +4,7 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 from os import environ
 
+
 class User(BaseModel, Base):
     """ A user class """
     
