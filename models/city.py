@@ -1,17 +1,24 @@
 #!/usr/bin/python3
-"""Defines the City class."""
+"""This is the city class"""
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, Integer, String
-from sqlalchemy import ForeignKey
+from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy.orm import relationship, backref
+
 
 class City(BaseModel, Base):
-    """Represent a city.
-
+    """This is the class for City
     Attributes:
-        state_id (str): The state id.
-        name (str): The name of the city.
+        state_id: The state id
+        name: input name
     """
-    __tablename__ = 'cities'
-
+    __tablename__ = "cities"
     name = Column(String(128), nullable=False)
-    state_id = Column(String(60), ForeignKey('states.id'))
+    state_id = Column(String(60),
+                      ForeignKey("states.id", ondelete="CASCADE"),
+                      nullable=False)
+    places = relationship(
+        "Place",
+        cascade="all",
+        backref=backref("cities", cascade="all"),
+        passive_deletes=True)
+    # TODO: we need single_parent=True here?

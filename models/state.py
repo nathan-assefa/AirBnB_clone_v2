@@ -1,42 +1,30 @@
 #!/usr/bin/python3
-"""Defines the City class."""
+"""This is the state class"""
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, Integer, String
-from sqlalchemy import ForeignKey
-from sqlalchemy.orm import relationship
-from os import environ
+from sqlalchemy.orm import relationship, backref
+from sqlalchemy import Column, String
+from os import getenv
 
 
 class State(BaseModel, Base):
-    """Represent a city.
-
+    """This is the class for State
     Attributes:
-        state_id (str): The state id.
-        name (str): The name of the city.
+        name: input name
     """
-    __tablename__ = 'states'
-
+    __tablename__ = "states"
     name = Column(String(128), nullable=False)
-    state_id = Column(String(60), ForeignKey('states.id'))
-    #if environ['HBNB_TYPE_STORAGE'] == 'db':
-        #cities = relationship(
-                #'City', cascade='all, delete', backref='state'
-                #)
-    if True:
+    cities = relationship(
+        "City",
+        cascade="all,delete,delete-orphan",
+        backref=backref("state", cascade="all,delete"),
+        passive_deletes=True,
+        single_parent=True)
+
+    if getenv("HBNB_TYPE_STORAGE") != "db":
         @property
         def cities(self):
-            """Getter method for cities
-            Return: list of cities with state_id equal to self.id
-            """
+            """returns list of City instances with state_id"""
             from models import storage
-            from models.city import City
-            # return list of City objs in __objects
-            cities_dict = storage.all(City)
-            cities_list = []
-
-            # copy values from dict to list
-            for city in cities_dict.values():
-                if city.state_id == self.id:
-                    cities_list.append(city)
-
-            return cities_list
+            from models import City
+            return [v for k, v in storage.all(City).items()
+                    if v.state_id == self.id]
