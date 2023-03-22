@@ -1,12 +1,14 @@
 #!/usr/bin/python3
 """The driving power of relational databses"""
 from models.base_model import BaseModel, Base
-from models.user import User
+#from models.user import User
 from models.state import State
 from models.city import City
+"""
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
+"""
 from os import getenv
 from sqlalchemy import create_engine, MetaData
 
@@ -16,12 +18,13 @@ class DBStorage():
     to interact with our detabase """
 
     __classNames = [
-            User,
+            #User,
             State,
             City,
-            Place,
-            Amenity,
-            Review]
+            #Place,
+            #Amenity,
+            #Review
+            ]
 
     __engine = None
     __session = None
