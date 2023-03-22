@@ -2,7 +2,6 @@
 """ To define user class """
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
-from os import environ
 
 
 class User(BaseModel, Base):
@@ -12,5 +11,5 @@ class User(BaseModel, Base):
     
     email = Column(String(128), nullable=False)
     password = Column(String(128), nullable=False)
-    password = Column(String(128), nullable=False)
-    password = Column(String(128), nullable=False)
+    first_name = Column(String(128), nullable=False)
+    last_name = Column(String(128), nullable=False)
