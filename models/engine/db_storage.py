@@ -1,81 +1,92 @@
 #!/usr/bin/python3
-""" new class for sqlAlchemy """
-from os import getenv
-from sqlalchemy.orm import sessionmaker, scoped_session
-from sqlalchemy import (create_engine)
-from sqlalchemy.ext.declarative import declarative_base
-from models.base_model import Base
+"""The driving power of relational databses"""
+from models.base_model import BaseModel, Base
+from models.user import User
 from models.state import State
 from models.city import City
-from models.user import User
+from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
-from models.amenity import Amenity
+from os import getenv
+from sqlalchemy import create_engine, MetaData
 
 
-class DBStorage:
-    """ create tables in environmental"""
+class DBStorage():
+    """ This class comprises the ORM methods that helps us
+    to interact with our detabase """
+
+    __classNames = [
+            User,
+            State,
+            City,
+            Place,
+            Amenity,
+            Review
+            ]
+
     __engine = None
     __session = None
 
     def __init__(self):
-        user = getenv("HBNB_MYSQL_USER")
-        passwd = getenv("HBNB_MYSQL_PWD")
-        db = getenv("HBNB_MYSQL_DB")
-        host = getenv("HBNB_MYSQL_HOST")
-        env = getenv("HBNB_ENV")
+        """ This is how we get conneted to the database.
+        The four environmental variables are used for
+        robust security """
 
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
-                                      .format(user, passwd, host, db),
-                                      pool_pre_ping=True)
-
-        if env == "test":
-            Base.metadata.drop_all(self.__engine)
+        self.__engine = create_engine(
+            'mysql+mysqldb://{}:{}@{}:3306/{}'
+            .format(getenv("HBNB_MYSQL_USER"),
+                    getenv("HBNB_MYSQL_PWD"),
+                    getenv("HBNB_MYSQL_HOST"),
+                    getenv("HBNB_MYSQL_DB")),
+            pool_pre_ping=True)
 
     def all(self, cls=None):
-        """returns a dictionary
-        Return:
-            returns a dictionary of __object
+        #query to fetch all objects related to cls if cls
+        #is not None. Otherwise fetch all
         """
-        dic = {}
-        if cls:
-            if type(cls) is str:
-                cls = eval(cls)
-            query = self.__session.query(cls)
-            for elem in query:
-                key = "{}.{}".format(type(elem).__name__, elem.id)
-                dic[key] = elem
+        list_obj = []
+        if not cls:
+           for obj in DBStorage.__classNames:
+               list_obj += (self.__session.query(obj))
+               print(list_obj)
         else:
-            lista = [State, City, User, Place, Review, Amenity]
-            for clase in lista:
-                query = self.__session.query(clase)
-                for elem in query:
-                    key = "{}.{}".format(type(elem).__name__, elem.id)
-                    dic[key] = elem
-        return (dic)
+            list_obj = self.__session.query(cls)
+
+        #return the dictionary reperesentation
+        #return {v.__class__.__name__ + '.' + v.id: v for v in list_obj
+        return {type(v).__name__ + '.' + v.id: v for v in list_obj}
+        """
+        obj_dict = {}
+
+        if cls:
+            obj_dict.update(session.query(cls))
+        else:
+            for key in DBStorage.__classNames:
+                for row in self.__session.query(key):
+                    obj_dict.update({'{}.{}'.
+                                    format(type(row).__name__, row.id,): row})
+        return obj_dict
 
     def new(self, obj):
-        """add a new element in the table
-        """
+        """ Adding the obj to the database """
         self.__session.add(obj)
 
     def save(self):
-        """save changes
-        """
+        """ commiting all changes to a database """
         self.__session.commit()
 
     def delete(self, obj=None):
-        """delete an element in the table
-        """
+        """ Delete a session object if not None """
         if obj:
-            self.session.delete(obj)
+            self.__session.delete(obj)
 
     def reload(self):
-        """configuration
-        """
+        """ To Create all the tables on the database """
+        from sqlalchemy.orm import sessionmaker
         Base.metadata.create_all(self.__engine)
-        sec = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        Session = scoped_session(sec)
+        Session = sessionmaker(
+                bind=self.__engine, expire_on_commit=False
+                )
         self.__session = Session()
 
     def close(self):

@@ -1,55 +1,38 @@
 #!/usr/bin/python3
-""" """
-from tests.test_models.test_base_model import test_basemodel
+"""test for city"""
+import unittest
+import os
 from models.city import City
-import pycodestyle
-
-
-class test_City(test_basemodel):
-    """ """
-
-    def __init__(self, *args, **kwargs):
-        """ """
-        super().__init__(*args, **kwargs)
-        self.name = "City"
-        self.value = City
-
-    def test_state_id(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.state_id), str)
-
-    def test_name(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.name), str)
-
-
-class Test_PEP8(unittest.TestCase):
-    """test User"""
-
-    def test_pep8_user(self):
-        """test pep8 style"""
-        pep8style = pycodestyle.StyleGuide(quiet=True)
-        result = pep8style.check_files(['models/city.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
+from models.base_model import BaseModel
+import pep8
+from os import getenv
 
 
 class TestCity(unittest.TestCase):
-    """this will test the city class X"""
+    """this will test the city class"""
 
     @classmethod
     def setUpClass(cls):
         """set up for test"""
+
+        from models.state import State
+        cls.state = State()
+        cls.state.name = "California"
+        cls.state.save()
         cls.city = City()
         cls.city.name = "LA"
-        cls.city.state_id = "CA"
+        cls.city.state_id = cls.state.id
 
     @classmethod
-    def teardown(cls):
+    def tearDownClass(cls):
         """at the end of the test this will tear it down"""
+        from models import storage
+
+        # TODO: kill orphan
+        storage.delete(cls.city)
+        storage.delete(cls.state)
         del cls.city
+        del cls.state
 
     def tearDown(self):
         """teardown"""
