@@ -1,18 +1,24 @@
 #!/usr/bin/env bash
-# setup web static server
+# Writing a Bash script that sets up your web servers for the deployment of web_static
 
-sudo apt-get update
-sudo apt-get install -y nginx
-sudo mkdir -p /data/web_static/releases/test/
+#installing nginx
+
+sudo apt-get -y update
+sudo apt-get -y install nginx
+
+# Creating differnt folders
 sudo mkdir -p /data/web_static/shared/
-echo "<html>
-  <head>
-  </head>
-  <body>
-    Holberton School
-  </body>
-</html>" | sudo tee /data/web_static/releases/test/index.html
+sudo mkdir -p /data/web_static/releases/test/
+
+# Creating a file
+sudo touch /data/web_static/releases/test/index.html
+
+# Writing into a file
+echo "<h3>Hi everyone, this is Nathan</h3>" > sudo tee /data/web_static/releases/test/index.html
+
 sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
-sudo chown -R ubuntu:ubuntu /data
-sudo sed -i "/listen 80 default_server;/ a \\\n\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}\n" /etc/nginx/sites-available/default
+sudo chown -R ubuntu:ubuntu /data/
+
+sudo sed -i "/listen 80 default_server;/a \\\n\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}" /etc/nginx/sites-available/default
+
 sudo service nginx restart
