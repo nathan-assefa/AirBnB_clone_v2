@@ -1,7 +1,7 @@
 #!/usr/bin/python3
-from fabric.api import *
-from datatime import datetime
 """ This script genertes archive files from webstatic folder """
+from fabric.api import local
+from datatime import datetime
 
 
 def do_pack():
