@@ -6,7 +6,7 @@ from datatime import datetime
 
 def do_pack():
     """ Generating archive file """
-    local("makdir -p versions")
+    local("mkdir -p versions")
     file = 'versions/web_static_{}.tgz'\
         .format(datetime.strftime(datetime.now(), "%Y%m%d%I%M%S"))
 
