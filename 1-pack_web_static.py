@@ -9,8 +9,10 @@ def do_pack():
     local("mkdir -p versions")
     file = 'versions/web_static_{}.tgz'\
         .format(datetime.strftime(datetime.now(), "%Y%m%d%I%M%S"))
+    
+    f = 'tar -cvzf {} web_static'.format(file)
 
-    archive_file = local("'tar -cvzf {} web_static'.format(file)")
+    archive_file = local("f")
     if archive_file.failed:
         return None
     return file
