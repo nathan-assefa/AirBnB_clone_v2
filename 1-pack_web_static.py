@@ -13,6 +13,6 @@ def do_pack():
 
     archive_file = local("tar -cvzf {} web_static".format(file_path))
 
-    if archive_file.falied:
+    if archive_file.failed:
         return None
     return file_path
