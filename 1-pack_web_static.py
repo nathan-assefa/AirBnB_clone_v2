@@ -15,4 +15,4 @@ def do_pack():
 
     if archive_file.falied:
         return None
-    return archive_file
+    return file_path
