@@ -8,7 +8,6 @@ then
     sudo apt-get -y update
     sudo apt-get -y install nginx
 fi
-
 # Create the folders
 sudo mkdir -p /data/web_static/releases/test/
 sudo mkdir -p /data/web_static/shared/
