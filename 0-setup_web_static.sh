@@ -5,8 +5,8 @@
 
 if [ ! -x /usr/sbin/nginx ]
 then
-    sudo apt-get -y update
-    sudo apt-get -y install nginx
+    sudo apt-get update -y
+    suod apt-get install nginx -y
 fi
 
 # Creating folders
@@ -14,14 +14,16 @@ sudo mkdir -p /data/web_static/shared/
 sudo mkdir -p /data/web_static/releases/test/
 
 # Creating an html file with fack content within it
-echo "This is a Test!" | sudo tee /data/web_static/releases/test/index.html
+echo "Hey this is Nathan" > sudo tee /data/web_static/releases/test/index.html
 
 # Creating symbolic link
 sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
-# Give ownership of the /data/ folder to the ubuntu user AND group 
-sudo chown -R ubuntu:ubuntu /data
-sudo chmod -R 755 /data/
-sudo sed -i '48 i \\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}\n' /etc/nginx/sites-available/default
+
+# Giving owner ship for ubuntu user and group
+sudo chown -R ubuntu:ubuntu /data/
+
+# Editing nginx configuarion file
+sudo sed -i "/listen 80 default_server;/a \\\n\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}" /etc/nginx/sites-available/default
 
 # Restarig nginx
 sudo service nginx restart
