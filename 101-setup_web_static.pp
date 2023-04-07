@@ -1,16 +1,11 @@
 # puppet manifest preparing a server for static content deployment
-exec { 'Update server':
-  command => '/usr/bin/env apt-get -y update',
-}
--> exec {'Install NGINX':
-  command => '/usr/bin/env apt-get -y install nginx',
-}
--> exec {'Creates directory release/test':
-  command => '/usr/bin/env mkdir -p /data/web_static/releases/test/',
-}
--> exec {'Creates directories shared':
-  command => '/usr/bin/env mkdir -p /data/web_static/shared/',
-}
+
+exec {'/usr/bin/env apt-get -y update'}
+-> exec {'/usr/bin/env apt-get -y install nginx'}
+
+-> exec {'/usr/bin/env mkdir -p /data/web_static/releases/test/'}
+-> exec {'/usr/bin/env mkdir -p /data/web_static/shared/'}
+
 -> exec {'Write Hello World in index with tee command':
   command => '/usr/bin/env echo "Hello Wolrd Puppet" | sudo tee /data/web_static/releases/test/index.html',
 }
