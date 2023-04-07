@@ -10,9 +10,8 @@ then
 fi
 
 # Creating folders
-sudo mkdir -p /data/web_static/shared/
 sudo mkdir -p /data/web_static/releases/test/
-
+sudo mkdir -p /data/web_static/shared/
 # Create a fake HTML file
 touch /data/web_static/releases/test/index.html
 echo "<html>
