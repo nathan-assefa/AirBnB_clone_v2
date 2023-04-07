@@ -1,6 +1,6 @@
 # Implementing task 0 using puppet
 
-exec {'/usr/bin/apt-get -y update'}
+exec {'/usr/bin/env apt-get -y update'}
 -> package {'nginx':
     provider => apt,
     ensure => installed,
