@@ -8,7 +8,7 @@ exec {'/usr/bin/env apt-get -y update':}
 
 -> file {'/data/web_static/releases/test/index.html':
 ensure => present,
-content => 'Hi everyone |This is Nathan',
+content => 'echo "Hi everyone | This is Nathan" | sudo tee /data/web_static/releases/test/index.html',
 }
 
 -> file {'/data/web_static/current':
