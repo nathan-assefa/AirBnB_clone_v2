@@ -15,8 +15,8 @@ exec {'/usr/bin/env apt-get -y update':}
     target => '/data/web_static/releases/test/',
 }
 
--> exec {'Inserting line':
-    command => '/usr/bin/env sed -i "/listen 80 default_server;/a \\\n\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}" /etc/nginx/sites-available/default',
+-> exec {'Add new configuration to NGINX':
+  command => '/usr/bin/env sed -i "/listen 80 default_server;/a location /hbnb_static/ { alias /data/web_static/current/;}" /etc/nginx/sites-available/default',
 }
 
 -> exec {'/usr/bin/env chown -R ubuntu:ubuntu /data':}
