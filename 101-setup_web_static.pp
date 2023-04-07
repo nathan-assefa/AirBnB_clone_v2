@@ -7,24 +7,24 @@ exec {'/usr/bin/apt-get -y update':
     }
 }
 
-exec {'sudo /usr/bin/env mkdir -p /data/web_static/releases/test/'}
-exec {'sudo /usr/bin/env mkdir -p /data/web_static/shared/'}
+-> exec {'sudo /usr/bin/env mkdir -p /data/web_static/releases/test/'}
+-> exec {'sudo /usr/bin/env mkdir -p /data/web_static/shared/'}
 
-file {'/data/web_static/releases/test/index.html':
+-> file {'/data/web_static/releases/test/index.html':
 ensure => present,
 content => 'Hi everyone |This is Nathan',
 }
 
-file {'Symbolic link':
+-> file {'Symbolic link':
     path => '/data/web_static/current',
     ensure => link,
     target => '/data/web_static/releases/test/',
 }
 
-exec {'Inserting line':
+-> exec {'Inserting line':
     command => 'sudo sed -i "/listen 80 default_server;/a \\\n\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}" /etc/nginx/sites-available/default',
 }
 
-exec {'sudo /usr/bin/env chown -R ubuntu:ubuntu /data'}
+-> exec {'sudo /usr/bin/env chown -R ubuntu:ubuntu /data'}
 
-exec {'sudo /usr/bin/env service nginx restart'}
+-> exec {'sudo /usr/bin/env service nginx restart'}
