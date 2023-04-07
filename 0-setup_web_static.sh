@@ -1,14 +1,18 @@
 #!/usr/bin/env bash
-# Bash script that sets up your web servers for the deployment of web_static
-# Install Nginx if it not already installed
+# Writing a Fabric script (based on the file 1-pack_web_static.py)
+# +that distributes an archive to your web servers,
+# +using the function do_deploy:
+
 if [ ! -x /usr/sbin/nginx ]
 then
-    sudo apt-get -y update
-    sudo apt-get -y install nginx
+    sudo apt-get update
+    suod apt-get install nginx
 fi
-# Create the folders
-sudo mkdir -p /data/web_static/releases/test/
+
+# Creating folders
 sudo mkdir -p /data/web_static/shared/
+sudo mkdir -p /data/web_static/releases/test/
+
 # Create a fake HTML file
 touch /data/web_static/releases/test/index.html
 echo "<html>
