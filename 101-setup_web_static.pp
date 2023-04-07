@@ -5,22 +5,20 @@ exec {'/usr/bin/apt-get -y update':
         provider => apt,
         ensure => installed,
     }
-    
-    -> file {'/data/web_static/releases/test/':
-        ensure => directory,
-    }
-    -> file {'/data/web_static/shared/':
-        ensure => directory,
-    }
-    -> file {'/data/web_static/releases/test/index.html':
-        ensure => present,
-        content => 'Hi everyone |This is Nathan',
-    }
-    -> file {'Symbolic link':
-        path => '/data/web_static/current',
-	ensure => link,
-        target => '/data/web_static/releases/test/',
-    }
+}
+
+exec {'sudo /usr/bin/env mkdir -p /data/web_static/releases/test/'}
+exec {'sudo /usr/bin/env mkdir -p /data/web_static/shared/'}
+
+file {'/data/web_static/releases/test/index.html':
+ensure => present,
+content => 'Hi everyone |This is Nathan',
+}
+
+file {'Symbolic link':
+    path => '/data/web_static/current',
+    ensure => link,
+    target => '/data/web_static/releases/test/',
 }
 
 exec {'Inserting line':
