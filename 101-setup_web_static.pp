@@ -6,9 +6,8 @@ exec {'/usr/bin/env apt-get -y update':}
 -> exec {'/usr/bin/env mkdir -p /data/web_static/releases/test/':}
 -> exec {'/usr/bin/env mkdir -p /data/web_static/shared/':}
 
--> file {'/data/web_static/releases/test/index.html':
-    ensure => present,
-    content => "Hi everyone, This is Nathan\n",
+-> exec {'Write Hello World in index with tee command':
+  command => '/usr/bin/env echo "Hello Puppet" | sudo tee /data/web_static/releases/test/index.html',
 }
 
 -> file {'/data/web_static/current':
