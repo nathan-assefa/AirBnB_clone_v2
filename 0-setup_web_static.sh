@@ -19,11 +19,9 @@ echo "Hey this is Nathan" > sudo tee /data/web_static/releases/test/index.html
 # Creating symbolic link
 sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
 
-# Giving owner ship for ubuntu user and group
-sudo chown -R ubuntu:ubuntu /data/
-
-# Editing nginx configuarion file
-sudo sed -i "/listen 80 default_server;/a \\\n\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}" /etc/nginx/sites-available/default
-
-# Restarig nginx
+sudo chown -R ubuntu:ubuntu /data
+sudo chmod -R 755 /data/
+# Update the Nginx configuration to serve the content of /data/web_static/current/ to hbnb_static
+sudo sed -i '48 i \\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}\n' /etc/nginx/sites-available/default
+# Restart nginx
 sudo service nginx restart
