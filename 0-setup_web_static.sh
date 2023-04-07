@@ -10,8 +10,8 @@ then
 fi
 
 # Creating folders
-sudo mkdir -p /data/web_static/shared/
 sudo mkdir -p /data/web_static/releases/test/
+sudo mkdir -p /data/web_static/shared/
 
 # Creating an html file with fack content within it
 echo "Hey this is Nathan" > sudo tee /data/web_static/releases/test/index.html
