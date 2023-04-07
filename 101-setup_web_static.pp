@@ -27,4 +27,6 @@ exec {'Inserting line':
     command => 'sudo sed -i "/listen 80 default_server;/a \\\n\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}" /etc/nginx/sites-available/default',
 }
 
+exec {'sudo /usr/bin/env chown -R ubuntu:ubuntu /data'}
+
 exec {'sudo /usr/bin/env service nginx restart'}
