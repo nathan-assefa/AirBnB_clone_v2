@@ -14,7 +14,7 @@ sudo mkdir -p /data/web_static/shared/
 sudo mkdir -p /data/web_static/releases/test/
 
 # Creating an html file with fack content within it
-echo "<h3>Hey this is Nathan</h3>" > sudo tee /data/web_static/releases/test/index.html
+echo "Hey this is Nathan" > sudo tee /data/web_static/releases/test/index.html
 
 # Creating symbolic link
 sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
