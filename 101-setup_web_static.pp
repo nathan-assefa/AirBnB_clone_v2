@@ -1,25 +1,28 @@
-# Implementing task 0 using puppet
-
-exec {'/usr/bin/env apt-get -y update'}
--> exec {'/usr/bin/env apt-get -y install nginx'}
-
--> exec {'/usr/bin/env mkdir -p /data/web_static/releases/test/'}
--> exec {'/usr/bin/env mkdir -p /data/web_static/shared/'}
-
--> file {'/data/web_static/releases/test/index.html':
-ensure => present,
-content => 'Hi everyone |This is Nathan',
+# puppet manifest preparing a server for static content deployment
+exec { 'Update server':
+  command => '/usr/bin/env apt-get -y update',
 }
-
--> file {'/data/web_static/current':
-    ensure => link,
-    target => '/data/web_static/releases/test/',
+-> exec {'Install NGINX':
+  command => '/usr/bin/env apt-get -y install nginx',
 }
-
--> exec {'Inserting line':
-    command => '/usr/bin/env sed -i "/listen 80 default_server;/a \\\n\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}" /etc/nginx/sites-available/default',
+-> exec {'Creates directory release/test':
+  command => '/usr/bin/env mkdir -p /data/web_static/releases/test/',
 }
-
--> exec {'/usr/bin/env chown -R ubuntu:ubuntu /data'}
-
--> exec {'/usr/bin/env service nginx restart'}
+-> exec {'Creates directories shared':
+  command => '/usr/bin/env mkdir -p /data/web_static/shared/',
+}
+-> exec {'Write Hello World in index with tee command':
+  command => '/usr/bin/env echo "Hello Wolrd Puppet" | sudo tee /data/web_static/releases/test/index.html',
+}
+-> exec {'Create Symbolic link':
+  command => '/usr/bin/env ln -sf /data/web_static/releases/test /data/web_static/current',
+}
+-> exec {'Change owner and group like ubuntu':
+  command => '/usr/bin/env chown -R ubuntu:ubuntu /data',
+}
+-> exec {'Add new configuration to NGINX':
+  command => '/usr/bin/env sed -i "/listen 80 default_server;/a location /hbnb_static/ { alias /data/web_static/current/;}" /etc/nginx/sites-available/default',
+}
+-> exec {'Restart NGINX':
+  command => '/usr/bin/env service nginx restart',
+}
