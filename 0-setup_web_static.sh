@@ -9,16 +9,21 @@ then
     sudo apt-get -y install nginx
 fi
 
-# Creating folders
+# Create the folders
 sudo mkdir -p /data/web_static/releases/test/
 sudo mkdir -p /data/web_static/shared/
-
-# Creating an html file with fack content within it
-echo "This is a Test!" | sudo tee /data/web_static/releases/test/index.html
-# Creating symbolic link
+# Create a fake HTML file
+touch /data/web_static/releases/test/index.html
+echo "<html>
+  <head>
+  </head>
+  <body>
+    <h1>Testing Nginx configuration <h1>
+  </body>
+</html>" > /data/web_static/releases/test/index.html
+# Create a symbolic link /data/web_static/current linked to the /data/web_static/releases/test/ folder
 sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
-
-# Giving owner ship for ubuntu user and group
+# Give ownership of the /data/ folder to the ubuntu user AND group 
 sudo chown -R ubuntu:ubuntu /data
 sudo chmod -R 755 /data/
 # Update the Nginx configuration to serve the content of /data/web_static/current/ to hbnb_static
