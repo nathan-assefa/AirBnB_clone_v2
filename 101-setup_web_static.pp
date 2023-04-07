@@ -1,10 +1,9 @@
 # Implementing task 0 using puppet
 
-exec {'/usr/bin/apt-get -y update':
-    -> package {'nginx':
-        provider => apt,
-        ensure => installed,
-    }
+exec {'/usr/bin/apt-get -y update'}
+-> package {'nginx':
+    provider => apt,
+    ensure => installed,
 }
 
 -> exec {'sudo /usr/bin/env mkdir -p /data/web_static/releases/test/'}
