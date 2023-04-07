@@ -24,7 +24,7 @@ sudo chown -R ubuntu:ubuntu /data/
 sudo chmod -R 755 /data/
 
 # Editing nginx configuarion file
-sudo sed -i "/listen 80 default_server;/a \\\n\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}" /etc/nginx/sites-available/default
+sudo sed -i '48 i \\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}\n' /etc/nginx/sites-available/default
 
 # Restarig nginx
 sudo service nginx restart
