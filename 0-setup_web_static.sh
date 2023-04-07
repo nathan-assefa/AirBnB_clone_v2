@@ -1,30 +1,29 @@
 #!/usr/bin/env bash
-# Writing a Fabric script (based on the file 1-pack_web_static.py)
-# +that distributes an archive to your web servers,
-# +using the function do_deploy:
-
+# Bash script that sets up your web servers for the deployment of web_static
+# Install Nginx if it not already installed
 if [ ! -x /usr/sbin/nginx ]
 then
-    sudo apt-get update
-    suod apt-get install nginx
+    sudo apt-get -y update
+    sudo apt-get -y install nginx
 fi
-
-# Creating folders
-sudo mkdir -p /data/web_static/shared/
+# Create the folders
 sudo mkdir -p /data/web_static/releases/test/
-
-# Creating an html file with fack content within it
-echo "<h3>Hey this is Nathan</h3>" > sudo tee /data/web_static/releases/test/index.html
-
-# Creating symbolic link
+sudo mkdir -p /data/web_static/shared/
+# Create a fake HTML file
+touch /data/web_static/releases/test/index.html
+echo "<html>
+  <head>
+  </head>
+  <body>
+    <h1>Testing Nginx configuration <h1>
+  </body>
+</html>" > /data/web_static/releases/test/index.html
+# Create a symbolic link /data/web_static/current linked to the /data/web_static/releases/test/ folder
 sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
-
-# Giving owner ship for ubuntu user and group
+# Give ownership of the /data/ folder to the ubuntu user AND group 
 sudo chown -R ubuntu:ubuntu /data
 sudo chmod -R 755 /data/
-
-# Editing nginx configuarion file
-sudo sed -i "/listen 80 default_server;/a \\\n\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}" /etc/nginx/sites-available/default
-
-# Restarig nginx
+# Update the Nginx configuration to serve the content of /data/web_static/current/ to hbnb_static
+sudo sed -i '48 i \\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}\n' /etc/nginx/sites-available/default
+# Restart nginx
 sudo service nginx restart
