@@ -5,8 +5,8 @@
 
 if [ ! -x /usr/sbin/nginx ]
 then
-    sudo apt-get update
-    suod apt-get install nginx
+    sudo apt-get -y update
+    sudo apt-get -y install nginx
 fi
 
 # Creating folders
