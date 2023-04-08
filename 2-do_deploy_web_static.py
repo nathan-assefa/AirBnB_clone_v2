@@ -53,7 +53,7 @@ def do_deploy(archive_path):
 
         # Moving the files from web_static directory
         run('mv /data/web_static/releases/{}/web_static/* /data/web_static\
-                /releases/{}'.format(file_without_ext, file_without_ext))
+                /releases/{}/'.format(file_without_ext, file_without_ext))
 
         # Removing the web_static directory
         run('rm -rf /data/web_static/releases/{}\
