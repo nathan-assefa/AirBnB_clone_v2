@@ -26,7 +26,7 @@ def do_deploy(archive_path):
         # First deploy all the archive into the /tmp directory in the server
         # Here we need to use 'put' command that uses the hosts to
         # deploy the archive in a server
-        put('archive_path', '/tmp')
+        put('archive_path', '/tmp/')
 
         # Create a folder to uncompress the archive.
         # The folder name is going to be
