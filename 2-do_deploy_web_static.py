@@ -39,7 +39,7 @@ def do_deploy(archive_path):
         file_with_ext = archive_path.split('/')[-1]
         file_without_ext = file_with_ext.split('.')[0]
 
-        run('mkdir -p {}'.format(/data/web_static/releases/file_without_ext))
+        run('mkdir -p /data/web_static/releases/{}'.format(file_without_ext))
 
         # Know we have the file name so that we can
         # uncompress the archive and put the
