@@ -11,8 +11,7 @@ unique, we use iso format string ofdatetime module.
 Finally we need to remove all the
 archive from the server along with the the symbolic link.
 """
-from fabric.api import local, run, env
-from datetime import datetime
+from fabric.api import local, run, env, put
 import os
 
 
