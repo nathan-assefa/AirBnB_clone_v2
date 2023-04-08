@@ -11,13 +11,16 @@ unique, we use iso format string ofdatetime module.
 Finally we need to remove all the
 archive from the server along with the the symbolic link.
 """
+from fabric.api import local, run, env
+from datetime import datetime
+import os
 
 
 env.hosts = ['35.153.52.120', '52.91.183.3']
 
 
 def do_deploy(archive_path):
-    """ Deploying an app """
+    """ Deploying an webstatic app"""
 
     try:
         # First deploy all the archive into the /tmp directory in the server
