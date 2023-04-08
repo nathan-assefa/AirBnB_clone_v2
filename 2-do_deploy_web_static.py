@@ -59,7 +59,7 @@ def do_deploy(archive_path):
 
         # Now we have uncompressed folder. Therefor,
         # we can rermove the archive
-        run('rm /tmp{}'.format(file_with_ext))
+        run('rm /tmp/{}'.format(file_with_ext))
 
         # Removing the symbolic link
         run('rm -rf /data/web_static/current')
