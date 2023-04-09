@@ -25,8 +25,9 @@ def do_deploy(archive_path):
         run('tar -xzf /tmp/{} -C /data/web_static/releases/{}'.format(
             file_with_ext, file_without_ext))
         # Moving the files from web_static directory
-        run('mv /data/web_static/releases/{}/web_static/* /data/web_static\
-                /releases/{}/'.format(file_without_ext, file_without_ext))
+        run('mv {}/web_static/* {}'.format(folder, folder))
+        # run('mv /data/web_static/releases/{}/web_static/* /data/web_static\
+        # /releases/{}/'.format(file_without_ext, file_without_ext))
 
         # Removing the web_static directory
         # run('rm -rf /data/web_static/releases/{}\
