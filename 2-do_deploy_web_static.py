@@ -30,8 +30,7 @@ def do_deploy(archive_path):
         # /releases/{}/'.format(file_without_ext, file_without_ext))
 
         # Removing the web_static directory
-        run('rm -rf /data/web_static/releases/{}\
-            /web_static'.format(file_without_ext))
+        run('rm -rf {}/web_static'.format(folder))
 
         # Now we have uncompressed folder. Therefor,
         # we can rermove the archive
