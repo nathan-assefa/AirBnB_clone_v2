@@ -46,7 +46,7 @@ def do_deploy(archive_path):
         # run('rm -rf {}/web_static'.format(folder))
         # current = '/data/web_static/current'
         # run('rm -rf {}'.format(current))
-        run('ln -s {}/ /data/web_static/current'.format(folder, current))
+        run('ln -s {}/ /data/web_static/current'.format(folder))
         return True
     except Exception:
         return False
