@@ -22,7 +22,8 @@ def do_deploy(archive_path):
         folder = '/data/web_static/releases/{}'.format(file_without_ext)
         put(archive_path, '/tmp')
         run('mkdir -p /data/web_static/releases/{}'.format(file_without_ext))
-        run('tar -xzf /tmp/{} -C {}/'.format(file_with_ext, folder))
+        run('tar -xzf /tmp/{} -C /data/web_static/releases/{}'.format(
+            file_with_ext, file_without_ext))
         run('rm /tmp/{}'.format(file_with_ext))
         run('mv {}/web_static/* {}'.format(folder, folder))
         run('rm -rf {}/web_static'.format(folder))
