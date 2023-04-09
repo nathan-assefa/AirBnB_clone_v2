@@ -20,12 +20,14 @@ env.hosts = ['35.153.52.120', '52.91.183.3']
 
 def do_deploy(archive_path):
     """ Deploying an webstatic app"""
+    if os.path.exists(archive_path) is False:
+        return(False)
 
     try:
         # First deploy all the archive into the /tmp directory in the server
         # Here we need to use 'put' command that uses the hosts to
         # deploy the archive in a server
-        put('archive_path', '/tmp/')
+        put(archive_path, '/tmp/')
 
         # Create a folder to uncompress the archive.
         # The folder name is going to be
@@ -36,6 +38,8 @@ def do_deploy(archive_path):
 
         file_with_ext = archive_path.split('/')[-1]
         file_without_ext = file_with_ext.split('.')[0]
+
+        run('mkdir -p /data/web_static/releases/{}'.format(file_without_ext))
 
         # Know we have the file name so that we can
         # uncompress the archive and put the
@@ -48,8 +52,8 @@ def do_deploy(archive_path):
             file_with_ext, file_without_ext))
 
         # Moving the files from web_static directory
-        run('mv /data/web_static/releases/{}/web_static /data/web_static\
-                /releases/{}'.format(file_without_ext, file_without_ext))
+        run('mv /data/web_static/releases/{}/web_static/* /data/web_static\
+                /releases/{}/'.format(file_without_ext, file_without_ext))
 
         # Removing the web_static directory
         run('rm -rf /data/web_static/releases/{}\
@@ -57,12 +61,12 @@ def do_deploy(archive_path):
 
         # Now we have uncompressed folder. Therefor,
         # we can rermove the archive
-        run('rm /tmp{}'.format(file_with_ext))
+        run('rm /tmp/{}'.format(file_with_ext))
 
         # Removing the symbolic link
         run('rm -rf /data/web_static/current')
 
-        run('ln -sf /data/web_static/releases/{} /data/\
+        run('ln -s /data/web_static/releases/{}/ /data/\
                 web_static/current'.format(file_without_ext))
         return True
     except Exception:
