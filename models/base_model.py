@@ -40,7 +40,7 @@ class BaseModel:
     def __str__(self):
         """To return the standard string to print function"""
         return "[{}] ({}) {}".format(
-                self.__class__.__name__, self.id, self.__dict__
+                self.__class__.__name__, self.id, self.to_dict()
                 )
 
     def __repr__(self):

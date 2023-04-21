@@ -47,7 +47,6 @@ class DBStorage():
         if not cls:
            for obj in DBStorage.__classNames:
                list_obj += (self.__session.query(obj))
-               print(list_obj)
         else:
             list_obj = self.__session.query(cls)
 
