@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 from os import environ
+from models.city import City
 
 if environ['HBNB_TYPE_STORAGE'] == 'db':
     from models.engine.db_storage import DBStorage
