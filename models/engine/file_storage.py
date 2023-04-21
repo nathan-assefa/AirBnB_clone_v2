@@ -59,6 +59,6 @@ class FileStorage:
         except Exception:
             pass
 
-    def def close(self):
+    def close(self):
         """ Decerialization objects """
         self.reload()
