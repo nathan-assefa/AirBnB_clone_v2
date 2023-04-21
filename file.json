@@ -1,40 +1,40 @@
 {
-  "State.9f7a3e26-40c6-484b-abaa-fe74a6b6b954": {
+  "State.d32dedf3-0376-4b33-a677-808c06c99c57": {
     "name": "California",
-    "id": "9f7a3e26-40c6-484b-abaa-fe74a6b6b954",
-    "created_at": "2023-04-21T05:58:03.266075",
-    "updated_at": "2023-04-21T05:58:03.266136",
+    "id": "d32dedf3-0376-4b33-a677-808c06c99c57",
+    "created_at": "2023-04-21T06:00:10.259187",
+    "updated_at": "2023-04-21T06:00:10.259254",
     "__class__": "State"
   },
-  "State.1db1c207-e621-44d9-b91d-63611055cb4c": {
+  "State.0ec327a6-1e6e-450e-ba79-5eed4f4a16fa": {
     "name": "Arizona",
-    "id": "1db1c207-e621-44d9-b91d-63611055cb4c",
-    "created_at": "2023-04-21T05:58:03.355284",
-    "updated_at": "2023-04-21T05:58:03.355327",
+    "id": "0ec327a6-1e6e-450e-ba79-5eed4f4a16fa",
+    "created_at": "2023-04-21T06:00:10.259647",
+    "updated_at": "2023-04-21T06:00:10.259691",
     "__class__": "State"
   },
-  "City.17a69395-5fa6-4e96-8380-7a5172c74547": {
-    "state_id": "9f7a3e26-40c6-484b-abaa-fe74a6b6b954",
+  "City.4c581a22-03e8-45bb-bcb7-f416fb281e3b": {
+    "state_id": "d32dedf3-0376-4b33-a677-808c06c99c57",
     "name": "Napa",
-    "id": "17a69395-5fa6-4e96-8380-7a5172c74547",
-    "created_at": "2023-04-21T05:58:03.356830",
-    "updated_at": "2023-04-21T05:58:03.356886",
+    "id": "4c581a22-03e8-45bb-bcb7-f416fb281e3b",
+    "created_at": "2023-04-21T06:00:10.260603",
+    "updated_at": "2023-04-21T06:00:10.260657",
     "__class__": "City"
   },
-  "City.943a01fa-251d-4f53-b1a4-8a9041a947a3": {
-    "state_id": "9f7a3e26-40c6-484b-abaa-fe74a6b6b954",
+  "City.0ded36f6-5a63-42fc-a723-8714f746ccba": {
+    "state_id": "d32dedf3-0376-4b33-a677-808c06c99c57",
     "name": "Sonoma",
-    "id": "943a01fa-251d-4f53-b1a4-8a9041a947a3",
-    "created_at": "2023-04-21T05:58:03.357437",
-    "updated_at": "2023-04-21T05:58:03.357482",
+    "id": "0ded36f6-5a63-42fc-a723-8714f746ccba",
+    "created_at": "2023-04-21T06:00:10.261363",
+    "updated_at": "2023-04-21T06:00:10.261428",
     "__class__": "City"
   },
-  "City.7cb4adb4-ece5-4acb-958c-539f347753b9": {
-    "state_id": "1db1c207-e621-44d9-b91d-63611055cb4c",
+  "City.5fa371f0-6bb9-4a1d-bda6-20ec514f89bd": {
+    "state_id": "0ec327a6-1e6e-450e-ba79-5eed4f4a16fa",
     "name": "Page",
-    "id": "7cb4adb4-ece5-4acb-958c-539f347753b9",
-    "created_at": "2023-04-21T05:58:03.358002",
-    "updated_at": "2023-04-21T05:58:03.358046",
+    "id": "5fa371f0-6bb9-4a1d-bda6-20ec514f89bd",
+    "created_at": "2023-04-21T06:00:10.262109",
+    "updated_at": "2023-04-21T06:00:10.262156",
     "__class__": "City"
   }
 }
