@@ -41,16 +41,14 @@ class HBNBCommand(cmd.Cmd):
             args = args.replace('"', "")
 
             if "," in args:
-                match = re.search(r"(\S+), (\S+), (\S+)", args)
-                if match:
+                if match := re.search(r"(\S+), (\S+), (\S+)", args):
                     arg1 = match.group(1).replace('"', "")
                     arg2 = match.group(2).replace('"', "")
                     arg3 = match.group(3).replace('"', "")
                     line = "{} {} {} {} {}".format(
                             command, className, arg1, arg2, arg3
                             )
-                match = re.search(r"\.", line)
-                if match:
+                elif match := re.search(r"\.", line):
                     args = [line[: match.span()[0]], line[match.span()[1]:]]
                     match = re.search(r"\(", args[1])
                     command = [
