@@ -58,3 +58,7 @@ class FileStorage:
                 self.new(eval(className + "(**value)"))
         except Exception:
             pass
+
+    def def close(self):
+        """ Decerialization objects """
+        self.reload()
