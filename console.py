@@ -57,7 +57,8 @@ class HBNBCommand(cmd.Cmd):
                             args[1][: match.span()[0]],
                             args[1][match.span()[1]:]
                             ]
-                    if match := re.search(r'"(.*?)\", (.*)\)', command[1]):
+                    match = re.search(r'"(.*?)\", (.*)\)', command[1])
+                    if match:
                         _id = match.group(1)
                         _dict = match.group(2).replace("'", '"')
                         line = "{} {} {} .{}".format(
