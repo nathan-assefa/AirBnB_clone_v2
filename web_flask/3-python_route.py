@@ -27,14 +27,10 @@ def text(text):
     return 'C %s' % text
 
 
-@apt.route('/python/<text>', strict_slashes=False)
-def py(text):
-    """ Displays the the contents of the variable 'text' """
-    text = text.replace('_', ' ')
-    if (text):
-        return 'Python %s' % text
-    else:
-        return 'Python text'
+@apt.route('/python', defaults={'text': 'is cool'}, strict_slashes=False)
+@apt.route('/python/(<text>)', strict_slashes=False)
+def python_text(text):
+    return "Python {}".format(text.replace('_', ' '))
 
 
 if __name__ == "__main__":
