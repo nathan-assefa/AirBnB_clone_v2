@@ -13,6 +13,7 @@ def hello():
     """ This function simply rendesrs the string 'Hello HBNB' """
     return ('Hello HBNB!')
 
+
 @apt.route('/hbnb', strict_slashes=False)
 def hbnb():
     """ Rendering a string 'HBNB' """
