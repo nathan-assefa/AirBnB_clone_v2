@@ -28,7 +28,7 @@ def text(text):
 
 
 @apt.route('/python', defaults={'text': 'is cool'}, strict_slashes=False)
-@apt.route('/python/(<text>)', strict_slashes=False)
+@apt.route('/python/<text>', strict_slashes=False)
 def python_text(text):
     return "Python {}".format(text.replace('_', ' '))
 
