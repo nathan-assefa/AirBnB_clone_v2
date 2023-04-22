@@ -1,5 +1,12 @@
 #!/usr/bin/python3
-"""Module: Starts a Flask web app and fetches data from storage engine"""
+""" This script lets the flask app connects to mysql database and
+fetch all the data from the states table.
+
+ip address 0.0.0.0 is going to be used to all the machines within the
+the network to have access to our app. Port 5000 will be used at entry
+point """
+
+
 from flask import Flask, render_template
 from models import storage
 from models.state import State
@@ -9,18 +16,18 @@ app = Flask(__name__)
 
 
 @app.teardown_appcontext
-def close_session(foo):
-    """Closes session"""
+def close_dp(exit):
+    """ This context function gives back the
+    connection once request is done """
     storage.close()
 
 
 @app.route('/states_list', strict_slashes=False)
-def states_list():
-    """lists states from storage engine"""
+def db_app():
+    """ this function fetches all the states from mysql database """
     states = list(storage.all(State).values())
     return render_template('7-states_list.html', states=states)
 
 
-if __name__ == '__main__':
-    storage.reload()
-    app.run("0.0.0.0", 5000)
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000)
