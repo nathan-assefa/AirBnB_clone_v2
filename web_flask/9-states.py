@@ -27,12 +27,11 @@ def close_dp(exit):
 def db_app(id=None):
     """ this function fetches all the states from mysql database """
     if id:
+        s = None
         for state in storage.all(State).values():
             if state.id == id:
                 s = state
                 break
-        if not s:
-            s = None
     else:
         s = storage.all(State).values()
 
@@ -40,4 +39,4 @@ def db_app(id=None):
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8080)
+    app.run(host='0.0.0.0', port=5000)
