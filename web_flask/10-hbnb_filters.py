@@ -10,6 +10,7 @@ point """
 from flask import Flask, render_template
 from models import storage
 from models.state import State
+from models.amenity import Amenity
 
 
 app = Flask(__name__)
@@ -22,21 +23,14 @@ def close_dp(exit):
     storage.close()
 
 
-@app.route('/states', strict_slashes=False)
-@app.route('/states/<id>', strict_slashes=False)
-def db_app(id=None):
+@app.route('/hbnb_filters', strict_slashes=False)
+def db_app():
     """ this function fetches all the states from mysql database """
-    if id:
-        s = None
-        for state in storage.all(State).values():
-            if state.id == id:
-                s = state
-                break
-    else:
-        s = storage.all(State).values()
+    states = list(storage.all(State).values())
+    amenities = list(storage.all(Amenity).values())
 
-    return render_template('9-states.html', **locals())
+    return render_template('10-hbnb_filters.html', states=states, amenities=amenities)
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5050)
+    app.run(host='0.0.0.0', port=8080)
