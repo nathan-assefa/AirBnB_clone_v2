@@ -1,33 +1,29 @@
 #!/usr/bin/env bash
-#setting up your web servers for the deployment of web_static
+# Writing a Fabric script (based on the file 1-pack_web_static.py)
+# +that distributes an archive to your web servers,
+# +using the function do_deploy:
 
-
-# install nginx if not exist
-if [! -x /usr/sbin/nginx]
+if [ ! -x /usr/sbin/nginx ]
 then
-	sudo apt-get -y update
-	sudo apt-get -y install
+    sudo apt-get update -y
+    sudo apt-get install nginx -y
 fi
 
-# creating a folders
+# Creating folders
 sudo mkdir -p /data/web_static/shared/
 sudo mkdir -p /data/web_static/releases/test/
 
-# the 'tee' command would write to the file index.html if the file exists,
-# + otherwise it creates the file and wirtes into it.
-echo "Hello from vagrant world" | sudo tee /data/web_static/releases/test/index.html
+# Creating an html file with fack content within it
+echo "Hi everyone | This is Nathan" | sudo tee /data/web_static/releases/test/index.html
 
-# Creating symbolic link. The -f option forces the symbolic link creation
-# and if the symbolic link /data/web_static/current already exists,
-# it will be replaced by the new symbolic link.
+# Creating symbolic link
 sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
 
-# -R flag give ownership of the /data/ folder to the ubuntu user and group recursively
+# Giving owner ship for ubuntu user and group
 sudo chown -R ubuntu:ubuntu /data/
 
-# Creating alias
-sudo sed -i '/server_name _;/a \\tlocation /hbnb_static/ {\n\talias /data/web_static/current/;\n\t}' /etc/nginx/sites-available/default
+# Editing nginx configuarion file
+sudo sed -i "/listen 80 default_server;/a \\\n\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}" /etc/nginx/sites-available/default
 
 # Restarig nginx
 sudo service nginx restart
-
