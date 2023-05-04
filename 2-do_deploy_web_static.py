@@ -4,8 +4,10 @@
     using the function do_deploy:
 """
 
+
 from fabric.api import run, local, put, env
 import os
+
 
 env.hosts = ["54.173.114.81", "54.210.188.25"]
 
@@ -18,13 +20,11 @@ def do_deploy(archive_path):
 
     try:
         # Setting up required parameters(follow steps of 1, 2, & 3)
-        # 1. Extracting the archive file from the path
+        # 1. Extracting the archive file from the pathj
         arch_file = archive_path.split("/")[-1]
 
-        # 2. Removing the extension .tar from the file
-        no_ext = "/data/web_static/releases/" + arch_file.replace(
-                ".tar.gz", ""
-                )
+        # 2. Removing the extenssion .tar from the file
+        no_ext = "/data/web_static/releases/" + arch_file.split('.')[0]
 
         # 3. Adjusting the location where the archive is stored temporarily
         remote_temp = "/tmp/{}".format(arch_file)
