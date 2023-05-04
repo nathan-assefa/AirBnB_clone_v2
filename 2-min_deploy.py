@@ -24,7 +24,7 @@ def do_deploy(archive_path):
         arch_file = archive_path.split("/")[-1]
 
         # 2. Removing the extenssion .tar from the file
-        no_ext = "/data/web_static/releases/" + arch_file.replace(".tar", "")
+        no_ext = "/data/web_static/releases/" + arch_file.split('.')[0]
 
         # 3. Adjusting the location where the archive is stored temporarly
         remot_temp = "/tmp/{}".format(arch_file)
