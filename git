@@ -1,6 +1,4 @@
-#!/usr/bin/env bash
-chmod +x *.sql
-chmod +x *.py
+#!/bin/bash
 git add .
-git commit -m 'AirBnb clone_v2'
+git commit -m ' AirBnB_v2'
 git push
