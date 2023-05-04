@@ -34,6 +34,7 @@ def do_deploy(archive_path):
 
         # Here the archive is in the remove server of '/tmp/' folder.
         # We can uncompress the archive from the /tmp/
+        run('mkdir -p no_ext')
         run("tar -xzf {} -C {}".format(remot_temp, no_ext))
 
         # We can now remove the archive from /tmp/ directory
@@ -41,7 +42,7 @@ def do_deploy(archive_path):
 
         # Now, we have uncompressed file in the directory 'no_ext'
         # Let us mv the the contents of the uncompressed file
-        run("mv {}/web_static {}".format(no_ext, no_ext))
+        run("mv {}/web_static/* {}".format(no_ext, no_ext))
 
         # We can now remove the old one
         run("rm -rf {}/web_static".fromat(no_ext))
@@ -50,7 +51,7 @@ def do_deploy(archive_path):
         run("rm /data/web_static/current")
 
         # Let us create the new symbolic link
-        run("ln -sf {} /data/web_static/current".format(no_ext))
+        run("ln -s {} /data/web_static/current".format(no_ext))
 
         return True
     except Exception:
