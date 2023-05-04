@@ -45,7 +45,7 @@ def do_deploy(archive_path):
         run("mv {}/web_static/* {}".format(no_ext, no_ext))
 
         # We can now remove the old one
-        run("rm -rf {}/web_static".fromat(no_ext))
+        run("rm -rf {}/web_static".format(no_ext))
 
         # Let us remove the old symbolic link
         run("rm /data/web_static/current")
