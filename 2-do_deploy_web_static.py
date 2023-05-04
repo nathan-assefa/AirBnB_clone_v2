@@ -34,7 +34,7 @@ def do_deploy(archive_path):
 
         # Here the archive is in the remove server of '/tmp/' folder.
         # We can uncompress the archive from the /tmp/
-        run('mkdir -p no_ext')
+        run('mkdir -p {}'.format(no_ext))
         run("tar -xzf {} -C {}".format(remot_temp, no_ext))
 
         # We can now remove the archive from /tmp/ directory
