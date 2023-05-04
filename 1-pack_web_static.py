@@ -20,4 +20,3 @@ def do_pack():
         return None
     else:
         return filename
-
