@@ -26,16 +26,16 @@ def do_deploy(archive_path):
         # 2. Removing the extenssion .tar from the file
         no_ext = "/data/web_static/releases/" + arch_file.split('.')[0]
 
-        # 3. Adjusting the location where the archive is stored temporarily
-        remote_temp = "/tmp/{}".format(arch_file)
+        # 3. Adjusting the location where the archive is stored temporarly
+        remot_temp = "/tmp/{}".format(arch_file)
 
         # Storing the archive to the remote server using 'put' command
         put(archive_path, "/tmp/")
 
-        # Here the archive is in the remote server of '/tmp/' folder.
-        # We can uncompress the archive from the /tmp/ location
-        run("mkdir -p {}".format(no_ext))
-        run("tar -xzf {} -C {}".format(remote_temp, no_ext))
+        # Here the archive is in the remove server of '/tmp/' folder.
+        # We can uncompress the archive from the /tmp/
+        run('mkdir -p {}'.format(no_ext))
+        run("tar -xzf {} -C {}".format(remot_temp, no_ext))
 
         # We can now remove the archive from /tmp/ directory
         run("rm {}".format(remote_temp))
@@ -45,7 +45,7 @@ def do_deploy(archive_path):
         run("mv {}/web_static/* {}".format(no_ext, no_ext))
 
         # We can now remove the old one
-        run("rm -rf {}/web_static".format(no_ext))
+        run("rm -rf {}/web_static".fromat(no_ext))
 
         # Let us remove the old symbolic link
         run("rm /data/web_static/current")
