@@ -8,21 +8,21 @@ from models.base_model import BaseModel
 
 
 class_names = {
-        'BaseModel': BaseModel
-        #User,
-        #Amenity,
-        #State,
-        #City,
-        #Place,
-        #Review,
-        }
+    "BaseModel": BaseModel
+    # User,
+    # Amenity,
+    # State,
+    # City,
+    # Place,
+    # Review,
+}
 
 
 class HBNBCommand(cmd.Cmd):
-    prompt = '(hbnb) '
+    prompt = "(hbnb) "
 
     def do_create(self, arg):
-        """ We need to use try and except block to handle any
+        """We need to use try and except block to handle any
         unexpected errors that may occur while creating and
         saving a new instance of the BaseModel. For example, if there
         is an error in the way we're calling the BaseModel constructor,
@@ -31,12 +31,12 @@ class HBNBCommand(cmd.Cmd):
         we can catch and handle such errors in a more graceful way,
         e.g., by printing an informative error message to the user.
         """
-        
+
         try:
             args = arg.split()
 
             if not args:
-                print ('** class name missing **')
+                print("** class name missing **")
                 return
             elif args[0] not in class_names:
                 print("** class doesn't exist **")
@@ -49,8 +49,8 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, arg):
         """
-            Prints the string representation of an instance based on
-            the class name and id. Ex: $ show BaseModel 1234-1234-1234.
+        Prints the string representation of an instance based on
+        the class name and id. Ex: $ show BaseModel 1234-1234-1234.
         """
         args = arg.split()
         if not args:
@@ -66,9 +66,9 @@ class HBNBCommand(cmd.Cmd):
             return
         try:
             objects = storage.all()
-            key = '{}.{}'.format(args[0], args[1])
+            key = "{}.{}".format(args[0], args[1])
             if key not in objects:
-                print('** no instance found **')
+                print("** no instance found **")
             else:
                 print(objects[key])
         except Exception as e:
@@ -89,37 +89,38 @@ class HBNBCommand(cmd.Cmd):
             objects = storage.all()
             key = "{}.{}".format(args[0], args[1])
             if key not in objects:
-                print('** no instance found **')
+                print("** no instance found **")
                 return
             else:
-                del(objects[key])
+                del objects[key]
         except Exception as e:
             print(e)
 
     def do_all(self, arg):
-        """ Prints all the instances """
+        """Prints all the instances"""
         try:
             args = arg.split()
             objects = storage.all()
-            #let us first check if the class if a class name exists
+            # let us first check if the class if a class name exists
             if args and args[0] not in class_names:
                 print("** class doesn't exist **")
                 return
             if args:
                 new_obj = [
-                        str(obj) for obj in objects.values() \
-                                if args[0] == type(obj).__name__
-                        ]
+                    str(obj)
+                    for obj in objects.values()
+                    if args[0] == type(obj).__name__
+                ]
             elif len(args) == 0:
                 new_obj = [str(obj) for obj in objects.values()]
 
             print(new_obj)
-            
+
         except Exception as e:
             print(e)
 
     def do_update(self, arg):
-        """ updating an instance """
+        """updating an instance"""
         args = arg.split()
         try:
             if not args:
@@ -145,26 +146,26 @@ class HBNBCommand(cmd.Cmd):
             if key not in objects.keys():
                 print("** no instance found **")
                 return
-            
+
             import ast
 
             attr_name = args[2]
 
-            if attr_name in ['id', 'created_at', 'updated_at']:
+            if attr_name in ["id", "created_at", "updated_at"]:
                 return
 
             attr_val_str = args[3]
 
             try:
                 attr_val = ast.literal_eval(attr_val_str)
-                ''' Here we can also use attr_val = eval(attr_val_str), but
-                ast_literal_eval() is more secure since it only evalues literal
-                data types, namey, str, int, float etc...
-                '''
-                '''
+                """ Here we can also use attr_val = eval(attr_val_str), but
+                ast_literal_eval() is more secure since it only evaluets literal
+                data types, namely, str, int, float etc...
+                """
+                """
                 For security sake we have to use type(getattr(ins, key, val)) to,
                 which is explained at the bottom, identify the data type of an object
-                '''
+                """
             except ValueError:
                 # Handle the case where the attribute value is not a literal
                 attr_val = attr_val_str
@@ -191,10 +192,23 @@ class HBNBCommand(cmd.Cmd):
             we can set it using setattr()
             """
 
-                
+            ''' Additionally, we can also use 'update' function to add and modify attribute
+            attr_name = args[2]
+            attr_val = args[3]
+            try:
+                attr_val = eval(attr_val)
+            except:
+                pass
+
+            obj = objects[key]
+            obj_dict = obj.to_dict()
+            obj_dict[attr_name] = attr_val
+            obj.update(obj_dict)
+            storage.save()
+            '''
+
         except Exception as e:
             print(e)
-
 
     def do_EOF(self, arg):
         print()
@@ -202,7 +216,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_quit(self, arg):
         return True
-    
+
     def do_exit(self, arg):
         return True
 
@@ -235,16 +249,16 @@ class HBNBCommand(cmd.Cmd):
 
     def help_all(self):
         print("Usage: all")
-        print("All command Prints all string representation of \
-                all instances based or not on the class name. \
-                Ex: $ all BaseModel or $ all.")
+        print("All command Prints all string representation of all instances")
+        print("based or not on the class name. Ex: $ all BaseModel or $ all.")
 
     def help_update(self):
         print("Usage: update")
-        print("Update command Updates an instance based on the class name \
-                and id by adding or updating attribute \
-                (save the change into the JSON file). Ex: $ update BaseModel \
-                1234-1234-1234 email 'aibnb@mail.com'.")
+        print("Update command Updates an instance based on the class name")
+        print("and id by adding or updating attribut(save the change into")
+        print("the JSON file)")
+        print("Ex: $ update BaseModel 1234-1234-1234 email 'aibnb@mail.com'.")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     HBNBCommand().cmdloop()
