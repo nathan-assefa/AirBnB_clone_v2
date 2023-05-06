@@ -13,6 +13,17 @@ from models.amenity import Amenity
 from models.review import Review
 
 
+class_names = {
+        'BaseModel': BaseModel,
+        'User': User,
+        'City': City,
+        'State': State,
+        'Place': Place,
+        'Amenity': Amenity,
+        'Review': Review
+        }
+
+
 class HBNBCommand(cmd.Cmd):
     """This interpretor interprets few commands
     to create, recreate, update, show, and to accept
