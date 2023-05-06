@@ -68,53 +68,47 @@ class HBNBCommand(cmd.Cmd):
                 line = "{} {} {}".format(command, className, args)
         return cmd.Cmd.precmd(self, line)
 
-    def do_create(self, arg):
-        """
-        updating do_create method to handle more arguments
-        """
 
+    def do_create(self, line):
+        """Creates a new instance of BaseModel, saves it
+        Exceptions:
+            SyntaxError: when there is no args given
+            NameError: when there is no object taht has the name
+        """
         try:
-            arguments = arg.split()
-
-            if not arguments:
-                print("** class name missing **")
-                return
-            elif arguments[0] not in class_names:
-                print("** class doesn't exist **")
-                return
-
-            new_inst = class_names[arguments[0]]()
-
-            # Iterate over each argument
-            for parms in arguments[1:]:
-                if '=' not in parms and '' in parms:
+            if not line:
+                raise SyntaxError()
+            my_list = line.split(" ")
+            obj = eval("{}()".format(my_list[0]))
+            for pair in my_list[1:]:
+                pair = pair.split('=', 1)
+                if len(pair) == 1 or "" in pair:
                     continue
-
-                # Setting up key and value pair
-                key, val = parms.split('=', 1)
-
-                # Check if the argument is string
-                if val.startswith('"') and val.endswith('"'):
-                    val = val[1:-1].replace('"', '\"').replace('_', ' ')
-
-                # Check if the argument is whether int or float
+                match = re.search('^"(.*)"$', pair[1])
+                cast = str
+                if match:
+                    value = match.group(1)
+                    value = value.replace('_', ' ')
+                    value = re.sub(r'(?<!\\)"', r'\\"', value)
                 else:
-                    try:
-                        if '.' in val:
-                            val = float(val)
-                        else:
-                            val = int(val)
-                    except Exception:
-                        continue
-
-                # Setting each argumets for each iteration
-                setattr(new_inst, key, val)
-
-            # Saving the new attribute into json file
-            new_inst.save()
-            print(new_inst.id)
-        except Exception as e:
-            print(e)
+                    value = pair[1]
+                    if "." in value:
+                        cast = float
+                    else:
+                        cast = int
+                try:
+                    value = cast(value)
+                except ValueError:
+                    pass
+                # TODO: escape double quotes for string
+                # TODO: replace '_' with spaces ' ' for string
+                setattr(obj, pair[0], value)
+            obj.save()
+            print("{}".format(obj.id))
+        except SyntaxError:
+            print("** class name missing **")
+        except NameError:
+            print("** class doesn't exist **")
 
     def do_show(self, line):
         """To show insatances"""
@@ -148,7 +142,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             del from_fileClass[arg[0] + "." + arg[1]]
             storage.save()
-
+    
     def do_all(self, line):
         """Prints all string representation of all instances
         Exceptions:
