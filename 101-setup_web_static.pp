@@ -1,24 +1,54 @@
 # puppet manifest preparing a server for static content deployment
 
-exec {'/usr/bin/env apt-get -y update':}
--> exec {'/usr/bin/env apt-get -y install nginx':}
-
--> exec {'/usr/bin/env mkdir -p /data/web_static/releases/test/':}
--> exec {'/usr/bin/env mkdir -p /data/web_static/shared/':}
-
--> exec {'Write Hello World in index with tee command':
-  command => '/usr/bin/env echo "Hello Puppet" | sudo tee /data/web_static/releases/test/index.html',
+puppet apply -e '
+package { "nginx":
+  ensure => installed,
 }
 
--> file {'/data/web_static/current':
-    ensure => link,
-    target => '/data/web_static/releases/test/',
+file { ["/data", "/data/web_static", "/data/web_static/releases", "/data/web_static/shared", "/data/web_static/releases/test"]:
+  ensure  => directory,
+  owner   => "ubuntu",
+  group   => "ubuntu",
+  recurse => true,
 }
 
--> exec {'Add new configuration to NGINX':
-  command => '/usr/bin/env sed -i "/listen 80 default_server;/a location /hbnb_static/ { alias /data/web_static/current/;}" /etc/nginx/sites-available/default',
+file { "/data/web_static/releases/test/index.html":
+  ensure  => file,
+  owner   => "ubuntu",
+  group   => "ubuntu",
+  content => "<html><body>Test Page</body></html>",
 }
 
--> exec {'/usr/bin/env chown -R ubuntu:ubuntu /data':}
+file { "/data/web_static/current":
+  ensure => link,
+  target => "/data/web_static/releases/test",
+  owner  => "ubuntu",
+  group  => "ubuntu",
+  force  => true,
+}
 
--> exec {'/usr/bin/env service nginx restart':}
+file { "/etc/nginx/sites-available/default":
+  ensure  => file,
+  content => "
+    server {
+        listen 80;
+        listen [::]:80;
+
+        root /data/web_static/current;
+
+        index index.html;
+
+        location /hbnb_static {
+            alias /data/web_static/current;
+            index index.html;
+        }
+    }
+  ",
+  notify => Service["nginx"],
+}
+
+service { "nginx":
+  ensure    => running,
+  enable    => true,
+  subscribe => File["/etc/nginx/sites-available/default"],
+}'
