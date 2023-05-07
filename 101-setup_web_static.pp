@@ -47,6 +47,11 @@ file { "/etc/nginx/sites-available/default":
   notify => Service["nginx"],
 }
 
+# Set ownership of /data/ directory
+exec { 'set_ownership_data_directory':
+  command => '/usr/bin/env chown -R ubuntu:ubuntu /data/',
+}
+
 service { "nginx":
   ensure    => running,
   enable    => true,
