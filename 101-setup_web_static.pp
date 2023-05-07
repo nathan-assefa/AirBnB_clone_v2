@@ -37,25 +37,7 @@ file { '/data/web_static/current':
 }
 
 # Update Nginx configuration
-file { '/etc/nginx/sites-available/default':
-  ensure  => file,
-  content => "
-    server {
-        listen 80;
-        listen [::]:80;
-
-        root /data/web_static/current;
-
-        index index.html;
-
-        location /hbnb_static/ {
-            alias /data/web_static/current;
-            index index.html;
-        }
-    }
-  ",
-  notify => Service['nginx'],
-}
+sudo sed -i '/root \/var\/www\/html;/i \ \n\tlocation \/hbnb_static\/ {\n\t\talias \/data\/web_static\/current\/;\n\t}\n' /etc/nginx/sites-available/default
 
 # Set ownership of /data/ directory
 exec { 'set_ownership_data_directory':
