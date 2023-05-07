@@ -37,7 +37,12 @@ file { '/data/web_static/current':
 }
 
 # Update Nginx configuration
-sudo sed -i '/root \/var\/www\/html;/i \ \n\tlocation \/hbnb_static\/ {\n\t\talias \/data\/web_static\/current\/;\n\t}\n' /etc/nginx/sites-available/default
+exec { 'update_nginx_config':
+  command => "sudo sed -i '/root \\/var\\/www\\/html;/i \\ \\n\\tlocation \\/hbnb_static\\/ {\\n\\t\\talias \\/data\\/web_static\\/current\\/;\\n\\t}\\n' /etc/nginx/sites-available/default",
+  path    => '/usr/bin:/usr/sbin:/bin:/sbin',
+  require => File['/etc/nginx/sites-available/default'],
+  notify  => Service['nginx'],
+}
 
 # Set ownership of /data/ directory
 exec { 'set_ownership_data_directory':
