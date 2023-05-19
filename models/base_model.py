@@ -1,47 +1,50 @@
 #!/usr/bin/python3
-import models
-from uuid import uuid4
+""" Class BaseModel """
 from datetime import datetime
+from uuid import uuid4
+import models
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, DateTime, String, Integer, Table, ForeignKey
-"""This is class is the parent class of the rest
-of the classes in this project, namely, User, State,
-Amenity, Place, and Review. This class comprises the
-comman methods and attributes that is used in other
-classes.
-"""
+from sqlalchemy import Column, Integer, String, DateTime
+
+
 Base = declarative_base()
 
 
-
 class BaseModel:
-    """Defining the init method to initialize the
-    the attributes"""
+    """construct"""
 
     id = Column(String(60), nullable=False, primary_key=True)
-    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
-    updated_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
+    updated_at = Column(DateTime, nullable=False, default=datetime.utcnow())
 
     def __init__(self, *args, **kwargs):
+        """Construct"""
         if kwargs:
-            directives = "%Y-%m-%dT%H:%M:%S.%f"
-            for key, val in kwargs.items():
-                if key == "created_at" or key == "updated_at":
-                    self.__dict__[key] = datetime.strptime(val, directives)
-                else:
-                    self.__dict__[key] = val
-
-        if 'id' not in kwargs:
+            for key, value in kwargs.items():
+                if key == "__class__":
+                    continue
+                elif key == "updated_at":
+                    value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                elif key == "created_at":
+                    value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                if "id" not in kwargs.keys():
+                    self.id = str(uuid4())
+                if "created_at" not in kwargs.keys():
+                    self.created_at = datetime.now()
+                if "updated_at" not in kwargs.keys():
+                    self.updated_at = datetime.now()
+                setattr(self, key, value)
+        else:
             self.id = str(uuid4())
             self.created_at = datetime.now()
-            self.updated_at = datetime.now()
+            self.updated_at = self.created_at
 
-    
     def __str__(self):
-        """To return the standard string to print function"""
-        return "[{}] ({}) {}".format(
-                self.__class__.__name__, self.id, self.to_dict()
-                )
+        """String"""
+        _dict = self.to_dict()
+        if '__class__' in _dict:
+            del _dict['__class__']
+        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, _dict)
 
     def __repr__(self):
         """return a string representaion
@@ -49,21 +52,21 @@ class BaseModel:
         return self.__str__()
 
     def save(self):
-        """Save either crated or updated instances"""
+        """save function"""
         self.updated_at = datetime.now()
         models.storage.new(self)
         models.storage.save()
 
     def to_dict(self):
-        """Puting the data in the dict object"""
-        _dict = self.__dict__.copy()
-        _dict["__class__"] = self.__class__.__name__
-        _dict["created_at"] = self.created_at.isoformat()
-        _dict["updated_at"] = self.updated_at.isoformat()
-        if '_sa_instance_state' in self.__dict__:
-            del _dict['_sa_instance_state']
-        return _dict
+        """Return a dictonary"""
+        aux_dict = self.__dict__.copy()
+        if '_sa_instance_state' in self.__dict__.keys():
+            aux_dict.pop('_sa_instance_state', None)
+        aux_dict["__class__"] = self.__class__.__name__
+        aux_dict["created_at"] = self.created_at.isoformat()
+        aux_dict["updated_at"] = self.updated_at.isoformat()
+        return aux_dict
 
     def delete(self):
-        """ This method deletes an instance """
+        """to delete the current instance from the storage (models.storage)"""
         models.storage.delete(self)
