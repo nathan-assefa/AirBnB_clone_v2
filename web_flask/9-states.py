@@ -1,40 +1,42 @@
 #!/usr/bin/python3
-""" This script starts the wsgi application and the web page
-at any ip address of 0.0.0.0 in port 5000
-"""
+""" This script lets the flask app connects to mysql database and
+fetch all the data from the states table.
+
+ip address 0.0.0.0 is going to be used to all the machines within the
+the network to have access to our app. Port 5000 will be used at entry
+point """
+
+
 from flask import Flask, render_template
 from models import storage
 from models.state import State
-from models.city import City
 
 
 app = Flask(__name__)
 
 
-# this tear down decorator helps flask to call this method when the query
-# + is completed to return all the resources, namely connection, etc
 @app.teardown_appcontext
-def close_session(exit):
+def close_dp(exit):
+    """ This context function gives back the
+    connection once request is done """
     storage.close()
 
+
 @app.route('/states', strict_slashes=False)
-def states():
-    states = list(storage.all().values())
-    #states = sorted(states, key=lambda state: state.name)
-    return render_template('9-states.html', states=states)
-
-
 @app.route('/states/<id>', strict_slashes=False)
-def cities_of_states(id):
-    states = storage.all().values()
-    _state = None
+def db_app(id=None):
+    """ this function fetches all the states from mysql database """
     if id:
-        for state in states:
+        s = None
+        for state in storage.all(State).values():
             if state.id == id:
-                _state = state
-                break;
+                s = state
+                break
+    else:
+        s = storage.all(State).values()
 
     return render_template('9-states.html', **locals())
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
