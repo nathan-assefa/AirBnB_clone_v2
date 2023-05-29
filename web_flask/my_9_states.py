@@ -23,20 +23,21 @@ def close_dp(exit):
 
 
 @app.route('/states', strict_slashes=False)
+def states():
+    states = storage.all(State).values()
+    states = sorted(states, key=lambda state: state.name)
+    return render_template('my-7-states_list.html', states=states)
+
 @app.route('/states/<id>', strict_slashes=False)
-def db_app(id=None):
-    """ this function fetches all the states from mysql database """
-    if id:
-        s = None
-        for state in storage.all(State).values():
-            if state.id == id:
-                s = state
-                break
+def cities_by_states(id):
+    states = storage.all(State).values()
+    
+    state = next((state for state in states if state.id == id), None)
+    if state:
+        cities = sorted(state.cities, key=lambda city: city.name)
     else:
-        s = storage.all(State).values()
-
-    return render_template('9-states.html', **locals())
-
+        cities = None
+    return render_template('my-7-states_list.html', state=state, cities=cities)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)

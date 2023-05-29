@@ -73,3 +73,41 @@ stopping the iteration as soon as a match is found and returning the state objec
 If a conventional loop was used instead, it would continue iterating over all the states,
 even after finding a match. By using next() with a generator expression, the search can be
 optimized, resulting in improved performance when dealing with large datasets.
+
+*************** List comprehension vs generator expression *****************
+
+In Python, both generator expressions and list comprehensions allow you to
+create sequences of values based on an iterative operation. However,
+there are some key differences between them in terms of memory usage and evaluation.
+
+1. Memory Usage:
+
+List Comprehension: When you use a list comprehension, it creates a complete
+list in memory, storing all the generated values at once. This can consume a
+significant amount of memory, especially for large sequences.
+
+Generator Expression: On the other hand, a generator expression generates
+values on-the-fly as they are needed. It doesn't store all the values in memory
+simultaneously. Instead, it generates values one at a time and only keeps track 
+of the current value and the iteration state. This makes generator expressions
+more memory-efficient, particularly when dealing with large data sets or
+infinite sequences.
+
+Evaluation:
+
+List Comprehension: A list comprehension immediately evaluates the entire
+expression and returns a list containing all the generated values.
+Once the list comprehension is executed, you can access the generated
+list multiple times.
+Generator Expression: A generator expression produces values lazily,
+meaning the values are generated as you iterate over the generator object.
+It doesn't evaluate the entire expression upfront. The generation is paused
+between iterations, and the next value is produced only when requested.
+This lazy evaluation can be useful when dealing with large data sets or when
+you only need to access a subset of the generated values.
+
+******** iter() function to create iterator object from list, tuple, etc *****
+use the next() function, you can convert the list comprehension into an
+iterator object using the iter() function
+
+"""
