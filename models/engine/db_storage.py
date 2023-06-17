@@ -41,6 +41,19 @@ class DBStorage():
             pool_pre_ping=True)
 
     def all(self, cls=None):
+        # let us first compile a list of class so that we
+        # query via loop
+        query_classes = DBStorage.__classNames if not cls else [cls]
+
+        # making query for each class using list comprehension
+
+        list_obj = [
+                obj for query_class in query_classes
+                for obj in self.__session.query(query_class)
+                ]
+
+        return {f"{type(obj).__name__}.{obj.id}": obj for obj in list_obj}
+        """
         #query to fetch all objects related to cls if cls
         #is not None. Otherwise fetch all
         list_obj = []
@@ -53,7 +66,7 @@ class DBStorage():
         #return the dictionary reperesentation
         #return {v.__class__.__name__ + '.' + v.id: v for v in list_obj
         return {type(v).__name__ + '.' + v.id: v for v in list_obj}
-        """
+
         obj_dict = {}
 
         if cls:
