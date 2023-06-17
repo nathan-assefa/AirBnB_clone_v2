@@ -41,7 +41,6 @@ class DBStorage():
             pool_pre_ping=True)
 
     def all(self, cls=None):
-        """
         #query to fetch all objects related to cls if cls
         #is not None. Otherwise fetch all
         list_obj = []
@@ -54,7 +53,7 @@ class DBStorage():
         #return the dictionary reperesentation
         #return {v.__class__.__name__ + '.' + v.id: v for v in list_obj
         return {type(v).__name__ + '.' + v.id: v for v in list_obj}
-
+        """
         obj_dict = {}
 
         if cls:
